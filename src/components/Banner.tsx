@@ -44,15 +44,14 @@ const Banner = () => {
   }, [text, isDeleting, loopNum, typingSpeed, textArray])
 
   return (
-    <div className="relative min-h-[80vh] flex items-center overflow-hidden">
+    <div className="relative min-h-[100vh] flex items-center overflow-hidden px-4 sm:px-6 lg:px-8">
       {/* Background with blur effect */}
       <div 
         className="absolute inset-0"
         style={{
           backgroundImage: `url(${bannerImg.src})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'right center',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           filter: 'blur(.5px)'
         }}
       />
