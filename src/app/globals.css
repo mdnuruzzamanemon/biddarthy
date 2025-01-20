@@ -19,3 +19,20 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.testimonial-swiper {
+  padding: 20px 50px !important;
+}
+
+.testimonial-swiper .swiper-button-next,
+.testimonial-swiper .swiper-button-prev {
+  color: white !important;
+}
+
+.testimonial-swiper .swiper-pagination-bullet {
+  background: white !important;
+}
+
+.testimonial-swiper .swiper-pagination-bullet-active {
+  background: #13284D !important;
+}

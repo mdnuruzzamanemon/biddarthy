@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Course Selling Platform",
-  description: "A platform for selling online courses",
+  title: "Biddarthy - Your Learning Partner",
+  description: "Quality education and guidance for competitive exams",
 };
 
 export default function RootLayout({
@@ -22,6 +23,7 @@ export default function RootLayout({
         <main className="pt-16">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
