@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Banner from '@/components/Banner'
 import TrendingCourses from '@/components/TrendingCourses'
 import Testimonials from '@/components/Testimonials'
