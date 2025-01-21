@@ -16,7 +16,7 @@ const trendingCourses = [
     enrolledStudents: 1234,
   },
   {
-    id: '1',
+    id: '2',
     title: 'Medical Admission Test Preparation',
     thumbnail: thumbnail, // Add these images to public folder
     price: 12000,
@@ -25,7 +25,7 @@ const trendingCourses = [
     enrolledStudents: 1234,
   },
   {
-    id: '1',
+    id: '3',
     title: 'Medical Admission Test Preparation',
     thumbnail: thumbnail, // Add these images to public folder
     price: 12000,
@@ -34,7 +34,7 @@ const trendingCourses = [
     enrolledStudents: 1234,
   },
   {
-    id: '1',
+    id: '4',
     title: 'Medical Admission Test Preparation',
     thumbnail: thumbnail, // Add these images to public folder
     price: 12000,
