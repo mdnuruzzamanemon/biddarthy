@@ -55,14 +55,14 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   href={item.path}
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-md font-medium transition-colors"
                 >
                   {item.name}
                 </Link>
               ))}
               <Link
                 href="/login"
-                className="bg-white text-[#13284D] px-4 py-2 rounded-md text-sm font-medium hover:bg-opacity-90 transition-colors"
+                className="bg-white text-[#13284D] px-4 py-2 rounded-md text-md font-medium hover:bg-opacity-90 transition-colors"
               >
                 Login
               </Link>

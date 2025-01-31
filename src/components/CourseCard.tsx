@@ -43,7 +43,7 @@ const CourseCard = ({
           </div>
         </div>
         <div className="p-6">
-          <h3 className="text-xl md:text-2xl font-semibold text-white mb-4 line-clamp-2 min-h-[3.5rem]">
+          <h3 className="text-xl md:text-2xl font-medium text-white mb-4 line-clamp-2 min-h-[3.5rem]">
             {title}
           </h3>
           
