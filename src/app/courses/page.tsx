@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import CourseCard from '@/components/CourseCard'
 import { useInView } from 'react-intersection-observer'
 import Pagination from '@/components/Pagination'
+import bannerImage from "@/app/client/images/bannerimg.jpg"
 
 // Course categories for tabs
 const categories = [
@@ -20,7 +21,7 @@ const mockCourses = [
   {
     id: '1',
     title: 'Medical Admission Test Preparation',
-    thumbnail: '/course-thumbnails/medical.jpg',
+    thumbnail: bannerImage,
     price: 12000,
     discountPrice: 9999,
     discountPercentage: 17,
@@ -30,7 +31,7 @@ const mockCourses = [
   {
     id: '2',
     title: 'Medical Admission Test Preparation',
-    thumbnail: '/course-thumbnails/medical.jpg',
+    thumbnail: bannerImage,
     price: 12000,
     discountPrice: 9999,
     discountPercentage: 17,
@@ -40,7 +41,7 @@ const mockCourses = [
   {
     id: '3',
     title: 'University Admission Test Preparation',
-    thumbnail: '/course-thumbnails/medical.jpg',
+    thumbnail: bannerImage,
     price: 12000,
     discountPrice: 9999,
     discountPercentage: 17,
@@ -50,7 +51,7 @@ const mockCourses = [
   {
     id: '4',
     title: 'Job Admission Test Preparation',
-    thumbnail: '/course-thumbnails/medical.jpg',
+    thumbnail: bannerImage,
     price: 12000,
     discountPrice: 9999,
     discountPercentage: 17,
@@ -60,7 +61,7 @@ const mockCourses = [
   {
     id: '5',
     title: 'University Admission Test Preparation',
-    thumbnail: '/course-thumbnails/medical.jpg',
+    thumbnail: bannerImage,
     price: 13000,
     discountPrice: 9999,
     discountPercentage: 17,
@@ -70,7 +71,7 @@ const mockCourses = [
   {
     id: '6',
     title: 'Medical Admission Test Preparation',
-    thumbnail: '/course-thumbnails/medical.jpg',
+    thumbnail: bannerImage,
     price: 12000,
     discountPrice: 9999,
     discountPercentage: 17,
@@ -80,7 +81,7 @@ const mockCourses = [
   {
     id: '7',
     title: 'Medical Admission Test Preparation',
-    thumbnail: '/course-thumbnails/medical.jpg',
+    thumbnail: bannerImage,
     price: 12000,
     discountPrice: 9999,
     discountPercentage: 17,
@@ -90,7 +91,7 @@ const mockCourses = [
   {
     id: '8',
     title: 'Skill Admission Test Preparation',
-    thumbnail: '/course-thumbnails/medical.jpg',
+    thumbnail: bannerImage,
     price: 12000,
     discountPrice: 9999,
     discountPercentage: 17,
@@ -100,7 +101,7 @@ const mockCourses = [
   {
     id: '9',
     title: 'Medical Admission Test Preparation',
-    thumbnail: '/course-thumbnails/medical.jpg',
+    thumbnail: bannerImage,
     price: 12000,
     discountPrice: 9999,
     discountPercentage: 17,
@@ -165,8 +166,8 @@ const CoursesPage = () => {
               onClick={() => setActiveCategory(category.id)}
               className={`px-6 py-2 rounded-full text-sm font-medium transition-colors
                 ${activeCategory === category.id
-                  ? 'bg-white text-[#13284D]'
-                  : 'bg-[#13284D] text-white hover:bg-white hover:text-[#13284D]'
+                  ? 'bg-[#f4bc45] text-[#13284D]'
+                  : 'bg-[#13284D] text-[#f4bc45] hover:bg-[#f4bc45] hover:text-[#13284D]'
                 }`}
             >
               {category.name}

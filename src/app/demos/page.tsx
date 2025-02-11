@@ -9,14 +9,14 @@ const demoVideos = [
   {
     id: 1,
     title: 'Medical Admission Test Preparation - Demo Class 1',
-    videoId: 'your-youtube-video-id-1',
+    videoId: '-P6PkFO-uIU?si=obQCxREsmK4crZC2',
     category: 'Medical',
     instructor: 'Dr. John Doe'
   },
   {
     id: 2,
     title: 'University Admission Mathematics - Demo Class',
-    videoId: 'your-youtube-video-id-2',
+    videoId: 'vARpRh0GnLk?si=eHY8fLqKn4QzGVjJ',
     category: 'University',
     instructor: 'Prof. Jane Smith'
   },

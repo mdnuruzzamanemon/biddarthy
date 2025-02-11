@@ -2,13 +2,15 @@
 
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import CountdownTimer from '@/components/CountdownTimer' 
 
-const CourseDetails = ({ params }: { params: { id: string } }) => {
+export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
+  const courseId = params.id;
 
-  // Mock data (Replace with API data)
+  // Mock Data (Replace with API Data)
   const course = {
-    id: params.id,
+    id: courseId,
     title: 'Medical Admission Test Preparation',
     price: 12000,
     discountPrice: 9999,
@@ -16,8 +18,8 @@ const CourseDetails = ({ params }: { params: { id: string } }) => {
     enrolledStudents: 1234,
     description: 'Comprehensive preparation for medical college admission tests covering all subjects with expert guidance.',
     instructor: 'Dr. John Doe',
-    discountEndsAt: '2024-12-31',
-    demoVideo: 'https://www.youtube.com/embed/your-video-id'
+    discountEndsAt: '2025-02-31T23:59:59Z',
+    demoVideo: 'https://www.youtube.com/embed/-P6PkFO-uIU?si=obQCxREsmK4crZC2'
   };
 
   return (
@@ -31,7 +33,8 @@ const CourseDetails = ({ params }: { params: { id: string } }) => {
           transition={{ duration: 0.5 }}
           className="bg-[#13284D] p-6 rounded-lg shadow-lg flex flex-col items-center"
         >
-          <h3 className="text-xl font-semibold text-white mb-4">Course Preview</h3>
+          
+          <h3 className="text-2xl font-semibold text-white mb-4">Course Preview</h3>
           <div className="relative w-full pt-[56.25%] rounded-lg overflow-hidden">
             <iframe
               className="absolute top-0 left-0 w-full h-full rounded-lg"
@@ -40,8 +43,7 @@ const CourseDetails = ({ params }: { params: { id: string } }) => {
             />
           </div>
 
-          <p className="text-red-400 text-sm mt-4">Offer ends: {new Date(course.discountEndsAt).toLocaleDateString()}</p>
-          <p className="text-gray-300 text-sm mt-2">
+          <p className="text-gray-300 text-sm mt-4">
             <strong>{course.enrolledStudents}</strong> students enrolled
           </p>
 
@@ -49,37 +51,50 @@ const CourseDetails = ({ params }: { params: { id: string } }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => router.push(`/courses/${course.id}/enroll`)}
-            className="w-full mt-4 bg-white text-[#13284D] py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
+            className="w-full mt-4 bg-[#f4bc45] text-[#13284D] py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
           >
             Enroll Now
           </motion.button>
         </motion.div>
 
-        {/* Right Card - Course Details */}
+        {/* ✅ Right Card - Course Details (Fixed Margin Issue) */}
         <motion.div 
           initial={{ opacity: 0, x: 50 }} 
           animate={{ opacity: 1, x: 0 }} 
           transition={{ duration: 0.5 }}
-          className="bg-[#13284D] p-6 rounded-lg shadow-lg"
+          className="bg-[#13284D] p-6 rounded-lg shadow-lg relative overflow-hidden mb-6"
         >
-          <h1 className="text-3xl font-bold text-white mb-4">{course.title}</h1>
-          
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-3xl font-bold text-white">৳{course.discountPrice}</span>
-            <span className="text-xl text-gray-400 line-through">৳{course.price}</span>
-            <span className="text-green-400 font-semibold">{course.discountPercentage}% off</span>
+          <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#0A192F] opacity-20 rounded-lg"></div>
+
+          <h1 className="text-4xl font-bold text-white mb-6">{course.title}</h1>
+
+          {/* Pricing Section */}
+          <div className="flex items-center gap-4 mb-2">
+            <span className="text-4xl font-bold text-[#f4bc45]">
+              ৳{course.discountPrice}
+            </span>
+            <span className="text-2xl text-gray-400 line-through">
+              ৳{course.price}
+            </span>
+            <span className="bg-[#f4bc45] text-[#13284D] px-3 py-1 rounded-lg text-lg">
+              {course.discountPercentage}% OFF
+            </span>
           </div>
 
-          <h3 className="text-xl font-semibold text-white mb-2">Instructor</h3>
-          <p className="text-gray-300">{course.instructor}</p>
+          <div className="mb-6">
+            {/* Countdown Timer (Now a separate component) */}
+            <CountdownTimer endDate={course.discountEndsAt} />
+          </div>
+          
 
-          <h3 className="text-xl font-semibold text-white mt-4 mb-2">Course Description</h3>
-          <p className="text-gray-300">{course.description}</p>
+          <h3 className="text-2xl font-semibold text-white mb-2">Instructor</h3>
+          <p className="text-gray-300 text-lg">{course.instructor}</p>
+
+          <h3 className="text-2xl font-semibold text-white mt-6 mb-2">Course Description</h3>
+          <p className="text-gray-300 leading-relaxed">{course.description}</p>
         </motion.div>
 
       </div>
     </div>
-  )
+  );
 }
-
-export default CourseDetails;
