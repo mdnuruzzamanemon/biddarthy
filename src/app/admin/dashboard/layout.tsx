@@ -4,6 +4,8 @@ import { ThemeProvider } from "next-themes";
 import { Separator } from "@/components/ui/separator";
 import MyBreadcrumb from "../components/MyBreadcrumb";
 
+import { TrendingCoursesProvider } from "@/app/admin/context/TrendingCoursesContext";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   
 
@@ -21,7 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <MyBreadcrumb />
                 </div>
               </header>
+              <TrendingCoursesProvider>
               {children}
+              </TrendingCoursesProvider>
             </SidebarInset>
           </SidebarProvider>
         </ThemeProvider>

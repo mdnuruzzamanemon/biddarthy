@@ -20,7 +20,9 @@ export default function MyBreadcrumb() {
     "/admin/dashboard": { current: "Dashboard" },
     "/admin/dashboard/category": { parent: "Dashboard", current: "Category", parentPath: "/admin/dashboard" },
     "/admin/dashboard/addCourse": { parent: "Dashboard", current: "Courses", parentPath: "/admin/dashboard" },
-    "/admin/dashboard/courses": { current: "Courses", parentPath: "/admin/dashboard" },
+    "/admin/dashboard/trendingCourses": {parent: "Dashboard", current: "Trendning Courses", parentPath: "/admin/dashboard" },
+    "/admin/dashboard/studentsRequest": {parent: "Dashboard", current: "Students Request", parentPath: "/admin/dashboard" },
+    "/admin/dashboard/studentsList": {parent: "Dashboard", current: "Students List", parentPath: "/admin/dashboard" },
   };
 
   const breadcrumb = breadcrumbMapping[pathname] || { current: "Page Not Found" };

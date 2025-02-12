@@ -5,11 +5,12 @@ import CourseList from "@/app/admin/components/CourseList";
 import CourseForm from "@/app/admin/components/CourseForm";
 import { Course } from "@/app/admin/components/types/courseType";
 
+
 export default function CourseManagement() {
   const [courses, setCourses] = useState<Course[]>([
     {
       title: "Medical Admission Test Preparation",
-      thumbnail: "/path/to/thumbnail1.jpg",
+      thumbnail: "/@/app/client/images/bannerimg.jpg",
       category: "Medical",
       price: 12000,
       discountPrice: 9999,
