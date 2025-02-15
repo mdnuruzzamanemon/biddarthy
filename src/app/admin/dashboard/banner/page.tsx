@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,6 +16,7 @@ export default function BannerUpload() {
       const reader = new FileReader();
       reader.onloadend = () => setBanner(reader.result as string);
       reader.readAsDataURL(file);
+      event.target.value = ""; // Reset input value to allow re-uploading the same file
     }
   };
 
@@ -30,7 +32,13 @@ export default function BannerUpload() {
       {banner && (
         <Card className="relative w-full max-w-lg mt-4">
           <CardContent className="p-4 flex justify-center items-center">
-            <img src={banner} alt="Banner Preview" className="w-full h-auto rounded-lg" />
+            <Image 
+              src={banner} 
+              alt="Banner Preview" 
+              width={500} 
+              height={300} 
+              className="w-full h-auto rounded-lg"
+            />
             <button
               onClick={handleRemove}
               className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full shadow-md hover:bg-red-600"

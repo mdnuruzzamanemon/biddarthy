@@ -90,26 +90,27 @@ const data = {
       ],
     },
     {
-      title: "Settings",
+      title: "Demo Class",
       url: "#",
       icon: Settings2,
       items: [
         {
-          title: "General",
-          url: "#",
+          title: "Demo Videos",
+          url: "/admin/dashboard/demoClass",
         },
+        
+      ],
+    },
+    {
+      title: "Manage Banner",
+      url: "/admin/dashboard/banner",
+      icon: Settings2,
+      items: [
         {
-          title: "Team",
+          title: "Home banner",
           url: "#",
         },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
+        
       ],
     },
   ],
