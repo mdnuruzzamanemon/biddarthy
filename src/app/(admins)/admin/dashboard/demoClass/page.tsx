@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { MoreHorizontal, Edit, Trash } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import CategoryCombobox from "@/app/admin/components/CategoryCombobox";
+import CategoryCombobox from "@/app/(admins)/admin/components/CategoryCombobox";
 import {
   Pagination,
   PaginationContent,

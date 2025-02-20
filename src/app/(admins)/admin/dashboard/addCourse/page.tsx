@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import CourseList from "@/app/admin/components/CourseList";
-import CourseForm from "@/app/admin/components/CourseForm";
-import { Course } from "@/app/admin/components/types/courseType";
+import CourseList from "@/app/(admins)/admin/components/CourseList";
+import CourseForm from "@/app/(admins)/admin/components/CourseForm";
+import { Course } from "@/app/(admins)/admin/components/types/courseType";
 
 
 export default function CourseManagement() {

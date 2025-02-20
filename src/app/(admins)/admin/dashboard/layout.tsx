@@ -4,9 +4,9 @@ import { ThemeProvider } from "next-themes";
 import { Separator } from "@/components/ui/separator";
 import MyBreadcrumb from "../components/MyBreadcrumb";
 
-import { TrendingCoursesProvider } from "@/app/admin/context/TrendingCoursesContext";
+import { TrendingCoursesProvider } from "@/app/(admins)/admin/context/TrendingCoursesContext";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   
 
   return (

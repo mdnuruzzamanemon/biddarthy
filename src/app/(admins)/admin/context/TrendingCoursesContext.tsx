@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Course } from "@/app/admin/components/types/courseType";
+import { Course } from "@/app/(admins)/admin/components/types/courseType";
 
 type TrendingCoursesContextType = {
   trendingCourses: Course[];

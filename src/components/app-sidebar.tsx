@@ -103,12 +103,12 @@ const data = {
     },
     {
       title: "Manage Banner",
-      url: "/admin/dashboard/banner",
+      url: "#",
       icon: Settings2,
       items: [
         {
           title: "Home banner",
-          url: "#",
+          url: "/admin/dashboard/banner",
         },
         
       ],

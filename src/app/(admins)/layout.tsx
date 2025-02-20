@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Roboto } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { Roboto } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
@@ -16,7 +13,7 @@ export const metadata: Metadata = {
   description: "Quality education and guidance for competitive exams",
 };
 
-export default function RootLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
@@ -24,11 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <Navbar />
-        <main className="pt-16">
+        <main >
           {children}
         </main>
-        <Footer />
+
       </body>
     </html>
   );

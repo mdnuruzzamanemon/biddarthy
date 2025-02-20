@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { useTrendingCourses } from "@/app/admin/context/TrendingCoursesContext";
+import { useTrendingCourses } from "@/app/(admins)/admin/context/TrendingCoursesContext";
 
 export default function TrendingCoursesPage() {
   const { trendingCourses, removeFromTrending } = useTrendingCourses();
