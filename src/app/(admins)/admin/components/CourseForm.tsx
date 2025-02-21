@@ -7,8 +7,8 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { Course } from "@/app/admin/components/types/courseType";
-import CategoryCombobox from "@/app/admin/components/CategoryCombobox"; // Import the new Category Combobox component
+import { Course } from "@/app/(admins)/admin/components/types/courseType";
+import CategoryCombobox from "@/app/(admins)/admin/components/CategoryCombobox"; // Import the new Category Combobox component
 
 type CourseFormProps = {
   initialCourse?: Course | null;

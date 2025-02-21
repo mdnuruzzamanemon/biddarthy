@@ -6,8 +6,8 @@ import Image from "next/image";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { Course } from "@/app/admin/components/types/courseType";
-import { useTrendingCourses } from "@/app/admin/context/TrendingCoursesContext";
+import { Course } from "@/app/(admins)/admin/components/types/courseType";
+import { useTrendingCourses } from "@/app/(admins)/admin/context/TrendingCoursesContext";
 import {
   Pagination,
   PaginationContent,

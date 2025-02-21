@@ -25,13 +25,32 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { parseCookies } from "nookies"; // Read cookies
+import {jwtDecode} from "jwt-decode"; // Decode JWT token
 
-// This is sample data.
+
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [user, setUser] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    const cookies = parseCookies();
+    const token = cookies.token; // Read token from cookies
+
+    if (token) {
+      const decoded: any = jwtDecode(token); // Decode JWT
+      setUser(decoded); // Store decoded user info
+    }
+  }, []);
+
+  if (!user) return <p>Loading sidebar...</p>;
+
+  // This is sample data.
 const data = {
   user: {
-    name: "Milton",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: user?.role || "Admin",
+    email: user?.email || "admin@biddarthi.org",
+    avatar: "../images/user1.png",
   },
   teams: [
     {
@@ -133,7 +152,6 @@ const data = {
   // ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

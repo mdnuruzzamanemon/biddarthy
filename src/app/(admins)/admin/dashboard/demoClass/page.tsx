@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -8,34 +8,59 @@ import { Input } from "@/components/ui/input";
 import { MoreHorizontal, Edit, Trash } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import CategoryCombobox from "@/app/(admins)/admin/components/CategoryCombobox";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 
-// Define the DemoClass type
+// Define the types based on your database schema
+type Category = {
+  _id: string;
+  categoryName: string;
+};
+
 type DemoClass = {
-  id: string;
+  _id: string;
   title: string;
   videoLink: string;
-  category: string;
+  category: string | Category; // This should match the `_id` of the category
   instructor: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export default function DemoClassPage() {
   const [demoClasses, setDemoClasses] = useState<DemoClass[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [currentDemoClass, setCurrentDemoClass] = useState<DemoClass | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const demoClassesPerPage = 5;
+  const [loading, setLoading] = useState(false);
+
+  // Fetch categories from API
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch("/api/categories");
+      const data = await res.json();
+      setCategories(data);
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
+  };
+
+  // Fetch demo classes from API
+  const fetchDemoClasses = async () => {
+    try {
+      const res = await fetch("/api/demoVideos");
+      const data = await res.json();
+      setDemoClasses(data);
+    } catch (error) {
+      console.error("Failed to fetch demo classes:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+    fetchDemoClasses();
+  }, []);
 
   const handleAdd = () => {
-    setCurrentDemoClass({ id: "", title: "", videoLink: "", category: "", instructor: "" });
+    setCurrentDemoClass({ _id: "", title: "", videoLink: "", category: "", instructor: "", createdAt: "", updatedAt: "" });
     setIsModalOpen(true);
   };
 
@@ -44,33 +69,38 @@ export default function DemoClassPage() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: string) => {
-    setDemoClasses(demoClasses.filter((demoClass) => demoClass.id !== id));
-  };
-
-  const handleSave = () => {
-    if (!currentDemoClass) return;
-
-    if (currentDemoClass.id) {
-      setDemoClasses(
-        demoClasses.map((demoClass) =>
-          demoClass.id === currentDemoClass.id ? currentDemoClass : demoClass
-        )
-      );
-    } else {
-      setDemoClasses([
-        ...demoClasses,
-        { ...currentDemoClass, id: Date.now().toString() },
-      ]);
+  const handleDelete = async (_id: string) => {
+    setLoading(true);
+    try {
+      await fetch(`/api/demoVideos/${_id}`, { method: "DELETE" });
+      fetchDemoClasses();
+    } catch (error) {
+      console.error("Delete failed:", error);
+    } finally {
+      setLoading(false);
     }
-    setIsModalOpen(false);
   };
 
-  const totalPages = Math.ceil(demoClasses.length / demoClassesPerPage);
-  const currentDemoClasses = demoClasses.slice(
-    (currentPage - 1) * demoClassesPerPage,
-    currentPage * demoClassesPerPage
-  );
+  const handleSave = async () => {
+    if (!currentDemoClass) return;
+    const method = currentDemoClass._id ? "PUT" : "POST";
+    const url = currentDemoClass._id ? `/api/demoVideos/${currentDemoClass._id}` : "/api/demoVideos";
+    setLoading(true);
+
+    try {
+      await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(currentDemoClass),
+      });
+      setIsModalOpen(false);
+      fetchDemoClasses();
+    } catch (error) {
+      console.error("Save failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="p-6 m-6 border rounded-lg shadow">
@@ -82,7 +112,6 @@ export default function DemoClassPage() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>#</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Video Link</TableHead>
             <TableHead>Category</TableHead>
@@ -91,12 +120,14 @@ export default function DemoClassPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentDemoClasses.map((demoClass, index) => (
-            <TableRow key={demoClass.id}>
-              <TableCell>{(currentPage - 1) * demoClassesPerPage + index + 1}</TableCell>
+          {demoClasses.map((demoClass) => (
+            <TableRow key={demoClass._id}>
               <TableCell>{demoClass.title}</TableCell>
               <TableCell>{demoClass.videoLink}</TableCell>
-              <TableCell>{demoClass.category}</TableCell>
+              <TableCell>
+                {/* {categories.find((cat) => cat._id === demoClass.category)?.categoryName || "Unknown"} */}
+                {demoClass.category.categoryName}
+              </TableCell>
               <TableCell>{demoClass.instructor}</TableCell>
               <TableCell>
                 <DropdownMenu>
@@ -109,7 +140,7 @@ export default function DemoClassPage() {
                     <DropdownMenuItem onClick={() => handleEdit(demoClass)}>
                       <Edit className="mr-2 h-4 w-4" /> Edit
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleDelete(demoClass.id)}>
+                    <DropdownMenuItem onClick={() => handleDelete(demoClass._id)}>
                       <Trash className="mr-2 h-4 w-4" /> Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -120,67 +151,36 @@ export default function DemoClassPage() {
         </TableBody>
       </Table>
 
-      {/* Pagination */}
-      <Pagination className="mt-4">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
-              className={currentPage === 1 ? "cursor-not-allowed opacity-50" : ""}
-            />
-          </PaginationItem>
-
-          {Array.from({ length: totalPages }, (_, i) => (
-            <PaginationItem key={i}>
-              <PaginationLink
-                href="#"
-                isActive={currentPage === i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-              >
-                {i + 1}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-
-          {totalPages > 5 && <PaginationEllipsis />}
-
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
-              className={currentPage === totalPages ? "cursor-not-allowed opacity-50" : ""}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-
       {/* Modal for Add/Edit Demo Class */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{currentDemoClass?.id ? "Edit Demo Class" : "Add Demo Class"}</DialogTitle>
+            <DialogTitle>{currentDemoClass?._id ? "Edit Demo Class" : "Add Demo Class"}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <Input
-              placeholder="Demo Class Title"
-              value={currentDemoClass?.title || ""}
+            <Input 
+              placeholder="Title" 
+              value={currentDemoClass?.title || ""} 
               onChange={(e) => setCurrentDemoClass((prev) => prev && { ...prev, title: e.target.value })}
             />
-            <Input
-              placeholder="Video Link"
-              value={currentDemoClass?.videoLink || ""}
+            <Input 
+              placeholder="Video Link" 
+              value={currentDemoClass?.videoLink || ""} 
               onChange={(e) => setCurrentDemoClass((prev) => prev && { ...prev, videoLink: e.target.value })}
             />
-            <div>
-              <label className="block text-sm font-medium">Category</label>
-              <CategoryCombobox value={currentDemoClass?.category || ""} onChange={(value) => setCurrentDemoClass((prev) => prev && { ...prev, category: value })} />
-            </div>
-            <Input
-              placeholder="Instructor"
-              value={currentDemoClass?.instructor || ""}
+            <CategoryCombobox 
+              value={currentDemoClass?.category || ""} 
+              onChange={(value) => setCurrentDemoClass((prev) => prev && { ...prev, category: value })}
+            />
+            <Input 
+              placeholder="Instructor" 
+              value={currentDemoClass?.instructor || ""} 
               onChange={(e) => setCurrentDemoClass((prev) => prev && { ...prev, instructor: e.target.value })}
             />
             <div className="flex justify-end">
-              <Button onClick={handleSave}>{currentDemoClass?.id ? "Update" : "Add"}</Button>
+              <Button onClick={handleSave} disabled={loading}>
+                {loading ? "Saving..." : currentDemoClass?._id ? "Update" : "Add"}
+              </Button>
             </div>
           </div>
         </DialogContent>

@@ -7,6 +7,7 @@ import { Course } from "@/app/(admins)/admin/components/types/courseType";
 
 
 export default function CourseManagement() {
+  // mock data
   const [courses, setCourses] = useState<Course[]>([
     {
       title: "Medical Admission Test Preparation",

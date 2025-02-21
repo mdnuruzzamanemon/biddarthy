@@ -6,12 +6,20 @@ import MyBreadcrumb from "../components/MyBreadcrumb";
 
 import { TrendingCoursesProvider } from "@/app/(admins)/admin/context/TrendingCoursesContext";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   
+  const cokieStore = await cookies();
+  const token = cokieStore.get("token")?.value;
+
+  if (!token) {
+    redirect("/admin/login"); // Redirect unauthorized users
+  }
 
   return (
-    <html lang="en">
-      <body>
+
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SidebarProvider>
             <AppSidebar />
@@ -29,7 +37,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </SidebarInset>
           </SidebarProvider>
         </ThemeProvider>
-      </body>
-    </html>
+
   );
 }

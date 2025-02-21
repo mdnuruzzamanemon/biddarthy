@@ -14,20 +14,41 @@ import {
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
+// Fetch categories from the database
+async function fetchCategories() {
+    const response = await fetch("/api/categories"); // Update with actual API endpoint
+    if (!response.ok) {
+        throw new Error("Failed to fetch categories");
+    }
+    return response.json();
+}
+
+type Category = {
+    _id: string;
+    categoryName: string;
+};
+
 type CategoryComboboxProps = {
     value: string;
     onChange: (value: string) => void;
 };
 
-const mockCategories = [
-    { value: "medical", label: "Medical" },
-    { value: "university", label: "University" },
-    { value: "engineering", label: "Engineering" },
-    { value: "skill-development", label: "Skill Development" },
-];
-
 export default function CategoryCombobox({ value, onChange }: CategoryComboboxProps) {
     const [open, setOpen] = React.useState(false);
+    const [categories, setCategories] = React.useState<Category[]>([]);
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        fetchCategories()
+            .then((data) => {
+                setCategories(data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching categories:", error);
+                setLoading(false);
+            });
+    }, []);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -39,7 +60,7 @@ export default function CategoryCombobox({ value, onChange }: CategoryComboboxPr
                     className="w-full justify-between"
                 >
                     {value
-                        ? mockCategories.find((category) => category.value === value)?.label
+                        ? categories.find((category) => category._id === value)?.categoryName
                         : "Select Category"}
                     <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
                 </Button>
@@ -48,27 +69,32 @@ export default function CategoryCombobox({ value, onChange }: CategoryComboboxPr
                 <Command>
                     <CommandInput placeholder="Search category..." className="h-9" />
                     <CommandList>
-                        <CommandEmpty>No category found.</CommandEmpty>
-                        <CommandGroup>
-                            {mockCategories.map((category) => (
-                                <CommandItem
-                                    key={category.value}
-                                    value={category.value}
-                                    onSelect={() => {
-                                        onChange(category.value);
-                                        setOpen(false);
-                                    }}
-                                >
-                                    {category.label}
-                                    <Check
-                                        className={cn(
-                                            "ml-auto",
-                                            value === category.value ? "opacity-100" : "opacity-0"
-                                        )}
-                                    />
-                                </CommandItem>
-                            ))}
-                        </CommandGroup>
+                        {loading ? (
+                            <CommandEmpty>Loading categories...</CommandEmpty>
+                        ) : categories.length === 0 ? (
+                            <CommandEmpty>No category found.</CommandEmpty>
+                        ) : (
+                            <CommandGroup>
+                                {categories.map((category) => (
+                                    <CommandItem
+                                        key={category._id}
+                                        value={category._id}
+                                        onSelect={() => {
+                                            onChange(category._id);
+                                            setOpen(false);
+                                        }}
+                                    >
+                                        {category.categoryName}
+                                        <Check
+                                            className={cn(
+                                                "ml-auto",
+                                                value === category._id ? "opacity-100" : "opacity-0"
+                                            )}
+                                        />
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        )}
                     </CommandList>
                 </Command>
             </PopoverContent>
