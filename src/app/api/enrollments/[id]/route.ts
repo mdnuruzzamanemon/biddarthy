@@ -3,10 +3,10 @@ import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
   const { id } = await params;
-  const { title, videoLink, category, instructor } = await req.json();
+  const { action } = await req.json(); // action: "approve" or "reject"
 
-  if (!id) {
-    return NextResponse.json({ message: "Demo Video ID is required" }, { status: 400 });
+  if (!id || !["approve", "reject"].includes(action)) {
+    return NextResponse.json({ message: "Invalid request" }, { status: 400 });
   }
 
   const token = getTokenFromCookies(req);
@@ -15,17 +15,16 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/demovideos/${id}`, {
+    const res = await fetch(`http://localhost:5000/api/enrollments/${action}/${id}`, {
       method: "PUT",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
       },
-      body: JSON.stringify({ title, videoLink, category, instructor }),
     });
 
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || "Failed to update demo video");
+    if (!res.ok) throw new Error(data.message || `Failed to ${action} enrollment`);
 
     return NextResponse.json(data);
   } catch (error: any) {
@@ -37,7 +36,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
   const { id } = await params;
 
   if (!id) {
-    return NextResponse.json({ message: "Demo Video ID is required" }, { status: 400 });
+    return NextResponse.json({ message: "Enrollment ID is required" }, { status: 400 });
   }
 
   const token = getTokenFromCookies(req);
@@ -46,16 +45,16 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/demovideos/${id}`, {
+    const res = await fetch(`http://localhost:5000/api/enrollments/${id}`, {
       method: "DELETE",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
-    if (!res.ok) throw new Error("Failed to delete demo video");
+    if (!res.ok) throw new Error("Failed to delete enrollment");
 
-    return NextResponse.json({ message: "Demo video deleted successfully" });
+    return NextResponse.json({ message: "Enrollment deleted successfully" });
   } catch (error: any) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }

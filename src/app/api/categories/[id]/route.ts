@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+  const { id } = await params;
   const { categoryName } = await req.json();
 
   if (!id) {
@@ -36,7 +36,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+  const { id } = await params;
 
   if (!id) {
     return NextResponse.json({ message: "Category ID is required" }, { status: 400 });

@@ -3,7 +3,7 @@ import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 
 // GET single course by ID
 export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+  const { id } = await params;
   const token = getTokenFromCookies(req);
 
   if (!token) {
@@ -29,7 +29,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
 // PUT update a course
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+  const { id } = await params;
   const formData = await req.formData();
 
   const title = formData.get("title");
@@ -81,7 +81,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
 // DELETE a course
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+  const { id } = await params;
   const token = getTokenFromCookies(req);
 
   if (!token) {

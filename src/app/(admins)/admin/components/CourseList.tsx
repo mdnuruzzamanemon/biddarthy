@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { Course } from "@/app/(admins)/admin/components/types/courseType";
-import { useTrendingCourses } from "@/app/(admins)/admin/context/TrendingCoursesContext";
+// import { useTrendingCourses } from "@/app/(admins)/admin/context/TrendingCoursesContext";
 import {
   Pagination,
   PaginationContent,
@@ -23,11 +23,12 @@ type CourseListProps = {
   courses: Course[];
   onAddCourse: () => void;
   onEditCourse: (course: Course) => void;
-  onDeleteCourse: (index: number) => void;
+  onDeleteCourse: (_id: string) => void;
+  onAddTrendingCourse: (_id: string) =>void;
 };
 
-export default function CourseList({ courses, onAddCourse, onEditCourse, onDeleteCourse }: CourseListProps) {
-  const { trendingCourses, addToTrending } = useTrendingCourses();
+export default function CourseList({ courses, onAddCourse, onEditCourse, onDeleteCourse, onAddTrendingCourse }: CourseListProps) {
+  // const { trendingCourses, addToTrending } = useTrendingCourses();
 
   // States for pagination and search
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,11 +71,11 @@ export default function CourseList({ courses, onAddCourse, onEditCourse, onDelet
 
       {/* Course Cards */}
       <div className="flex flex-wrap gap-4 justify-center mb-4">
-        {currentCourses.map((course, index) => (
-          <Card key={index} className="w-full sm:w-[260px]">
+        {currentCourses.map((course) => (
+          <Card key={course._id} className="w-full sm:w-[260px]">
             <CardHeader>
               <Image
-                src={course.thumbnail}
+                src={`http://localhost:5000/${course.thumbnail}`}
                 alt={course.title}
                 width={0}
                 height={0}
@@ -84,7 +85,7 @@ export default function CourseList({ courses, onAddCourse, onEditCourse, onDelet
             </CardHeader>
             <CardContent>
               <CardTitle>{course.title}</CardTitle>
-              <p className="text-sm text-gray-500">Category: {course.category}</p>
+              <p className="text-sm text-gray-500">Category: {course.category.categoryName}</p>
               <p className="text-sm text-gray-800">Price: ${course.price}</p>
             </CardContent>
             <CardFooter className="flex justify-between">
@@ -96,10 +97,10 @@ export default function CourseList({ courses, onAddCourse, onEditCourse, onDelet
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem onClick={() => onEditCourse(course)}>Edit</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => onDeleteCourse(index)}>Delete</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => onDeleteCourse(course._id)}>Delete</DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => addToTrending(course)}
-                    disabled={trendingCourses.some((c) => c.title === course.title)}
+                    onClick={() => onAddTrendingCourse(course._id)}
+                    // disabled={trendingCourses.some((c) => c.course._id === course._id)}
                   >
                     Add to Trending
                   </DropdownMenuItem>
