@@ -1,31 +1,44 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Pagination from '@/components/Pagination'
+import { Loader2 } from 'lucide-react'
 
-// Mock demo videos data (replace with API data later)
-const demoVideos = [
-  {
-    id: 1,
-    title: 'Medical Admission Test Preparation - Demo Class 1',
-    videoId: '-P6PkFO-uIU?si=obQCxREsmK4crZC2',
-    category: 'Medical',
-    instructor: 'Dr. John Doe'
-  },
-  {
-    id: 2,
-    title: 'University Admission Mathematics - Demo Class',
-    videoId: 'vARpRh0GnLk?si=eHY8fLqKn4QzGVjJ',
-    category: 'University',
-    instructor: 'Prof. Jane Smith'
-  },
-  // Add more demo videos...
-]
+
+// API Helper Function
+const fetchDemoVideos = async () => {
+  try {
+    const res = await fetch('/api/demoVideos')
+    if (!res.ok) throw new Error('Failed to fetch demo videos')
+    return await res.json()
+  } catch (error) {
+    console.error(error)
+    return []
+  }
+}
 
 const DemosPage = () => {
+  const [demoVideos, setDemoVideos] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 6 // Show 6 videos per page
+
+  // Fetch demo videos from API
+  useEffect(() => {
+    const getVideos = async () => {
+      try {
+        const data = await fetchDemoVideos()
+        setDemoVideos(data)
+      } catch (err: any) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+    getVideos()
+  }, [])
 
   // Calculate pagination
   const indexOfLastVideo = currentPage * itemsPerPage
@@ -49,42 +62,50 @@ const DemosPage = () => {
           </p>
         </motion.div>
 
-        {/* Videos Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentVideos.map((video) => (
-            <motion.div
-              key={video.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-[#13284D] rounded-lg overflow-hidden shadow-lg"
-            >
-              {/* YouTube Video Embed */}
-              <div className="relative pt-[56.25%]">
-                <iframe
-                  src={`https://www.youtube.com/embed/${video.videoId}`}
-                  title={video.title}
-                  className="absolute top-0 left-0 w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+        {/* Loading and Error States */}
+        {loading && (<div className="flex bg-[#0A192F] justify-center items-center ">
+        <Loader2 className="animate-spin w-8 h-8 text-white" />
+      </div>)}
+        {error && <p className="text-center text-red-500">{error}</p>}
 
-              {/* Video Info */}
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-white mb-2">
-                  {video.title}
-                </h3>
-                <div className="flex items-center justify-between text-sm text-gray-300">
-                  <span>{video.category}</span>
-                  <span>{video.instructor}</span>
+        {/* Videos Grid */}
+        {!loading && !error && demoVideos.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {currentVideos.map((video: any) => (
+              <motion.div
+                key={video._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-[#13284D] rounded-lg overflow-hidden shadow-lg"
+              >
+                {/* YouTube Video Embed */}
+                <div className="relative pt-[56.25%]">
+                  <iframe
+                    src={video.videoLink}
+                    title={video.title}
+                    className="absolute top-0 left-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+
+                {/* Video Info */}
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    {video.title}
+                  </h3>
+                  <div className="flex items-center justify-between text-sm text-gray-300">
+                    <span>{video.category.categoryName}</span>
+                    <span>{video.instructor}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* Pagination */}
-        {demoVideos.length > itemsPerPage && (
+        {!loading && demoVideos.length > itemsPerPage && (
           <Pagination
             totalItems={demoVideos.length}
             itemsPerPage={itemsPerPage}
@@ -94,7 +115,7 @@ const DemosPage = () => {
         )}
 
         {/* No Videos Message */}
-        {demoVideos.length === 0 && (
+        {!loading && demoVideos.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -108,4 +129,4 @@ const DemosPage = () => {
   )
 }
 
-export default DemosPage 
+export default DemosPage

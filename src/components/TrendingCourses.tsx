@@ -1,51 +1,75 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import CourseCard from './CourseCard'
-import thumbnail from "../app/client/images/bannerimg.jpg"
+import thumbnailFallback from "../app/client/images/bannerimg.jpg"
 
-// Temporary mock data (will be replaced with API data later)
-const trendingCourses = [
-  {
-    id: '1',
-    title: 'Medical Admission Test Preparation',
-    thumbnail: thumbnail, // Add these images to public folder
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-  },
-  {
-    id: '2',
-    title: 'Medical Admission Test Preparation',
-    thumbnail: thumbnail, // Add these images to public folder
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-  },
-  {
-    id: '3',
-    title: 'Medical Admission Test Preparation',
-    thumbnail: thumbnail, // Add these images to public folder
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-  },
-  {
-    id: '4',
-    title: 'Medical Admission Test Preparation',
-    thumbnail: thumbnail, // Add these images to public folder
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-  },
-  // Add more courses here
-]
+interface TrendingItem {
+  _id: string
+  course: {
+    _id: string
+    title: string
+    thumbnail: string
+    price: number
+    discountPrice: number
+  }
+  addedAt: string
+  __v: number
+}
+
+interface Course {
+  id: string
+  title: string
+  thumbnail: string
+  price: number
+  discountPrice: number
+  discountPercentage: number
+}
 
 const TrendingCourses = () => {
+  const [trendingCourses, setTrendingCourses] = useState<Course[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    const fetchTrendingCourses = async () => {
+      try {
+        const res = await fetch('/api/trending')
+        const data: TrendingItem[] = await res.json()
+        if (res.ok) {
+          // Transform the trending data to fit the CourseCard props
+          const formattedCourses = data.map((item) => {
+            const course = item.course
+            const price = course.price
+            const discountPrice = course.discountPrice
+            const discountPercentage = price
+              ? Math.round(((price - discountPrice) / price) * 100)
+              : 0
+
+            return {
+              id: course._id,
+              title: course.title,
+              // Use thumbnail from API; fallback if missing
+              thumbnail: course.thumbnail || thumbnailFallback,
+              price,
+              discountPrice,
+              discountPercentage,
+            }
+          })
+          setTrendingCourses(formattedCourses)
+        } else {
+          console.error('Error fetching trending courses')
+        }
+      } catch (error) {
+        console.error('Error fetching trending courses:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTrendingCourses()
+  }, [])
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0A192F]">
       <div className="max-w-7xl mx-auto">
@@ -64,14 +88,20 @@ const TrendingCourses = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {trendingCourses.map((course) => (
-            <CourseCard key={course.id} {...course} />
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-gray-300 text-center">Loading trending courses...</p>
+        ) : trendingCourses.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {trendingCourses.map((course) => (
+              <CourseCard key={course.id} {...course} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400 text-center">No trending courses available.</p>
+        )}
       </div>
     </section>
   )
 }
 
-export default TrendingCourses 
+export default TrendingCourses

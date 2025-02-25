@@ -1,29 +1,82 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import CountdownTimer from '@/components/CountdownTimer' 
+import CountdownTimer from '@/components/CountdownTimer'
+import { Loader2 } from 'lucide-react'
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function CoursePage() {
   const router = useRouter();
-  const courseId = params.id;
+  const { id } = useParams(); // ✅ Correct way to access dynamic route params
 
-  // Mock Data (Replace with API Data)
-  const course = {
-    id: courseId,
-    title: 'Medical Admission Test Preparation',
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    description: 'Comprehensive preparation for medical college admission tests covering all subjects with expert guidance.',
-    instructor: 'Dr. John Doe',
-    discountEndsAt: '2025-02-31T23:59:59Z',
-    demoVideo: 'https://www.youtube.com/embed/-P6PkFO-uIU?si=obQCxREsmK4crZC2'
-  };
+  const [course, setCourse] = useState<any>(null);
+  const [enrollmentCount, setEnrollmentCount] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!id) return; // Ensure id is available before making API calls
+
+    const fetchCourse = async () => {
+      try {
+        const res = await fetch(`/api/courses/${id}`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to fetch course');
+        }
+
+        const data = await res.json();
+        setCourse(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchEnrollmentCount = async () => {
+      try {
+        const res = await fetch(`/api/enrollments/count/${id}`, { method: 'GET' });
+
+        if (!res.ok) {
+          throw new Error('Failed to fetch enrollment count');
+        }
+
+        const data = await res.json();
+        setEnrollmentCount(data.enrollmentCount || 0);
+      } catch (err: any) {
+        console.error('Enrollment fetch error:', err);
+      }
+    };
+
+    fetchCourse();
+    fetchEnrollmentCount();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex bg-[#0A192F] justify-center items-center ">
+        <Loader2 className="animate-spin w-8 h-8 text-white" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="min-h-screen bg-[#0A192F] flex items-center justify-center text-red-500">{error}</div>;
+  }
+
+  if (!course) {
+    return <div className="min-h-screen bg-[#0A192F] flex items-center justify-center text-gray-400">Course not found</div>;
+  }
+
+  const discountPercentage = Math.round(((course.price - course.discountPrice) / course.price) * 100);
 
   return (
-    <div className="min-h-screen bg-[#0A192F] pt-20 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#0A192F] pt-10 flex items-center justify-center px-4">
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         {/* Left Card - Video & Enrollment */}
@@ -33,7 +86,6 @@ export default function Page({ params }: { params: { id: string } }) {
           transition={{ duration: 0.5 }}
           className="bg-[#13284D] p-6 rounded-lg shadow-lg flex flex-col items-center"
         >
-          
           <h3 className="text-2xl font-semibold text-white mb-4">Course Preview</h3>
           <div className="relative w-full pt-[56.25%] rounded-lg overflow-hidden">
             <iframe
@@ -44,20 +96,20 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
 
           <p className="text-gray-300 text-sm mt-4">
-            <strong>{course.enrolledStudents}</strong> students enrolled
+            <strong>{enrollmentCount}</strong> students enrolled
           </p>
 
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => router.push(`/courses/${course.id}/enroll`)}
+            onClick={() => router.push(`/courses/${course._id}/enroll`)}
             className="w-full mt-4 bg-[#f4bc45] text-[#13284D] py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
           >
             Enroll Now
           </motion.button>
         </motion.div>
 
-        {/* ✅ Right Card - Course Details (Fixed Margin Issue) */}
+        {/* Right Card - Course Details */}
         <motion.div 
           initial={{ opacity: 0, x: 50 }} 
           animate={{ opacity: 1, x: 0 }} 
@@ -77,15 +129,13 @@ export default function Page({ params }: { params: { id: string } }) {
               ৳{course.price}
             </span>
             <span className="bg-[#f4bc45] text-[#13284D] px-3 py-1 rounded-lg text-lg">
-              {course.discountPercentage}% OFF
+              {discountPercentage}% OFF
             </span>
           </div>
 
           <div className="mb-6">
-            {/* Countdown Timer (Now a separate component) */}
             <CountdownTimer endDate={course.discountEndsAt} />
           </div>
-          
 
           <h3 className="text-2xl font-semibold text-white mb-2">Instructor</h3>
           <p className="text-gray-300 text-lg">{course.instructor}</p>

@@ -3,146 +3,117 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import CourseCard from '@/components/CourseCard'
-import { useInView } from 'react-intersection-observer'
 import Pagination from '@/components/Pagination'
-import bannerImage from "@/app/client/images/bannerimg.jpg"
+import { Loader2 } from 'lucide-react'
+import bannerImage from "@/app/client/images/bannerimg.jpg" // fallback or placeholder if needed
 
-// Course categories for tabs
-const categories = [
-  { id: 'all', name: 'All Courses' },
-  { id: 'medical', name: 'Medical Admission' },
-  { id: 'university', name: 'University Admission' },
-  { id: 'job', name: 'Job Preparation' },
-  { id: 'skill', name: 'Skill Development' },
-]
+// Define TypeScript types for course and category
+type Course = {
+  id: string
+  title: string
+  thumbnail: string
+  price: number
+  discountPrice: number
+  discountPercentage: number
+  enrolledStudents: number
+  category: string
+  description?: string
+  instructor?: string
+}
 
-// Mock courses data (replace with API call later)
-const mockCourses = [
-  {
-    id: '1',
-    title: 'Medical Admission Test Preparation',
-    thumbnail: bannerImage,
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    category: 'medical'
-  },
-  {
-    id: '2',
-    title: 'Medical Admission Test Preparation',
-    thumbnail: bannerImage,
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    category: 'medical'
-  },
-  {
-    id: '3',
-    title: 'University Admission Test Preparation',
-    thumbnail: bannerImage,
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    category: 'university'
-  },
-  {
-    id: '4',
-    title: 'Job Admission Test Preparation',
-    thumbnail: bannerImage,
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    category: 'job'
-  },
-  {
-    id: '5',
-    title: 'University Admission Test Preparation',
-    thumbnail: bannerImage,
-    price: 13000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    category: 'university'
-  },
-  {
-    id: '6',
-    title: 'Medical Admission Test Preparation',
-    thumbnail: bannerImage,
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    category: 'medical'
-  },
-  {
-    id: '7',
-    title: 'Medical Admission Test Preparation',
-    thumbnail: bannerImage,
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    category: 'medical'
-  },
-  {
-    id: '8',
-    title: 'Skill Admission Test Preparation',
-    thumbnail: bannerImage,
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    category: 'skill'
-  },
-  {
-    id: '9',
-    title: 'Medical Admission Test Preparation',
-    thumbnail: bannerImage,
-    price: 12000,
-    discountPrice: 9999,
-    discountPercentage: 17,
-    enrolledStudents: 1234,
-    category: 'medical'
-  },
-  // Add more courses...
-]
+type Category = {
+  id: string
+  name: string
+}
 
 const CoursesPage = () => {
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [visibleCourses, setVisibleCourses] = useState(8)
-  const [filteredCourses, setFilteredCourses] = useState(mockCourses)
-  const { ref, inView } = useInView()
-  const [currentPage, setCurrentPage] = useState(1)
+  const [courses, setCourses] = useState<Course[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [activeCategory, setActiveCategory] = useState<string>('all')
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [loadingCourses, setLoadingCourses] = useState<boolean>(true)
+  const [loadingCategories, setLoadingCategories] = useState<boolean>(true)
   const itemsPerPage = 8
 
-  // Filter courses based on category
-  useEffect(() => {
-    const filtered = activeCategory === 'all'
-      ? mockCourses
-      : mockCourses.filter(course => course.category === activeCategory)
-    setFilteredCourses(filtered)
-    setVisibleCourses(8) // Reset visible courses when changing category
-  }, [activeCategory])
-
-  // Load more courses when scrolling to bottom
-  useEffect(() => {
-    if (inView) {
-      setVisibleCourses(prev => 
-        Math.min(prev + 8, filteredCourses.length)
-      )
+  // Helper function to extract an ID from an object (if needed)
+  const extractId = (obj: any): string => {
+    if (typeof obj === 'object') {
+      return obj._id || obj.$oid || ''
     }
-  }, [inView, filteredCourses.length])
+    return obj
+  }
 
+  // Fetch courses from the API and transform the data
+  useEffect(() => {
+    const fetchCourses = async () => {
+      setLoadingCourses(true)
+      try {
+        const res = await fetch('/api/courses')
+        const data = await res.json()
+        const transformedCourses: Course[] = data.map((course: any) => {
+          const discountPercentage = course.price
+            ? Math.round(((course.price - course.discountPrice) / course.price) * 100)
+            : 0
+          // Use the helper to extract the category id.
+          const categoryId = extractId(course.category)
+          return {
+            id: course._id, // assuming _id is already a string
+            title: course.title,
+            thumbnail: course.thumbnail || bannerImage,
+            price: course.price,
+            discountPrice: course.discountPrice,
+            discountPercentage,
+            category: categoryId,
+            description: course.description,
+            instructor: course.instructor,
+          }
+        })
+        setCourses(transformedCourses)
+      } catch (error) {
+        console.error("Error fetching courses:", error)
+      } finally {
+        setLoadingCourses(false)
+      }
+    }
+    fetchCourses()
+  }, [])
+
+  // Fetch categories from the API and transform them
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoadingCategories(true)
+      try {
+        const res = await fetch('/api/categories')
+        const data = await res.json()
+        const transformedCategories: Category[] = data.map((cat: any) => ({
+          id: extractId(cat),
+          name: cat.categoryName,
+        }))
+        // Prepend the "All Courses" category (which is not from the DB)
+        setCategories([{ id: 'all', name: 'All Courses' }, ...transformedCategories])
+      } catch (error) {
+        console.error("Error fetching categories:", error)
+      } finally {
+        setLoadingCategories(false)
+      }
+    }
+    fetchCategories()
+  }, [])
+
+  // Filter courses based on the active category
+  const filteredCourses = activeCategory === 'all'
+    ? courses
+    : courses.filter(course => course.category === activeCategory)
+
+  // Calculate pagination values
   const indexOfLastCourse = currentPage * itemsPerPage
   const indexOfFirstCourse = indexOfLastCourse - itemsPerPage
   const currentCourses = filteredCourses.slice(indexOfFirstCourse, indexOfLastCourse)
 
+  const isLoading = loadingCourses || loadingCategories
+
   return (
-    <div className="min-h-screen bg-[#0A192F] pt-24 pb-16">
+    <div className="min-h-screen bg-[#0A192F] pt-16 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -154,7 +125,7 @@ const CoursesPage = () => {
             Our Courses
           </h1>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Explore our wide range of courses designed to help you achieve your goals
+            Explore our wide range of courses designed to help you achieve your goals.
           </p>
         </motion.div>
 
@@ -163,7 +134,10 @@ const CoursesPage = () => {
           {categories.map((category) => (
             <button
               key={category.id}
-              onClick={() => setActiveCategory(category.id)}
+              onClick={() => {
+                setActiveCategory(category.id)
+                setCurrentPage(1)
+              }}
               className={`px-6 py-2 rounded-full text-sm font-medium transition-colors
                 ${activeCategory === category.id
                   ? 'bg-[#f4bc45] text-[#13284D]'
@@ -175,45 +149,53 @@ const CoursesPage = () => {
           ))}
         </div>
 
-        {/* Courses Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {currentCourses.map((course) => (
+        {/* Courses Grid or Loading */}
+        {isLoading ? (
+          <div className="flex justify-center items-center h-40">
+            <Loader2 className="animate-spin w-8 h-8 text-white" />
+          </div>
+        ) : (
+          <>
             <motion.div
-              key={course.id}
               layout
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
             >
-              <CourseCard {...course} />
+              {currentCourses.map((course) => (
+                <motion.div
+                  key={course.id}
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <CourseCard {...course} />
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
 
-        {/* Replace infinite scroll with pagination */}
-        <Pagination
-          totalItems={filteredCourses.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
+            {/* Pagination */}
+            <Pagination
+              totalItems={filteredCourses.length}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
 
-        {/* No Courses Message */}
-        {filteredCourses.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center text-gray-300 mt-12"
-          >
-            No courses found in this category.
-          </motion.div>
+            {/* No Courses Message */}
+            {filteredCourses.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center text-gray-300 mt-12"
+              >
+                No courses found in this category.
+              </motion.div>
+            )}
+          </>
         )}
       </div>
     </div>
   )
 }
 
-export default CoursesPage 
+export default CoursesPage

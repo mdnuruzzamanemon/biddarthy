@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -7,11 +8,10 @@ import { motion } from 'framer-motion'
 interface CourseCardProps {
   id: string
   title: string
-  thumbnail: any
+  thumbnail: string
   price: number
   discountPrice: number
   discountPercentage: number
-  enrolledStudents: number
 }
 
 const CourseCard = ({ 
@@ -20,9 +20,29 @@ const CourseCard = ({
   thumbnail, 
   price, 
   discountPrice, 
-  discountPercentage, 
-  enrolledStudents 
+  discountPercentage 
 }: CourseCardProps) => {
+  const [enrolledStudents, setEnrolledStudents] = useState<number | null>(null);
+
+  // Fetch enrolled students count
+  useEffect(() => {
+    const fetchEnrolledStudents = async () => {
+      try {
+        const res = await fetch(`/api/enrollments/count/${id}`);
+        const data = await res.json();
+        if (res.ok) {
+          setEnrolledStudents(data.enrollmentCount); // Assuming API returns { count: number }
+        } else {
+          console.error("Failed to fetch enrollment count:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching enrolled students:", error);
+      }
+    };
+
+    fetchEnrolledStudents();
+  }, [id]);
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -35,7 +55,7 @@ const CourseCard = ({
         <div className="relative w-full">
           <div className="w-full" style={{ paddingTop: '66.67%' }}>
             <Image
-              src={thumbnail}
+              src={`http://localhost:5000/${thumbnail}`}
               alt={title}
               fill
               className="object-cover"
@@ -49,7 +69,7 @@ const CourseCard = ({
           
           <div className="flex items-center mb-4">
             <span className="text-lg text-gray-300">
-              {enrolledStudents} students enrolled
+              {enrolledStudents !== null ? `${enrolledStudents} students enrolled` : 'Loading...'}
             </span>
           </div>
 
@@ -67,7 +87,7 @@ const CourseCard = ({
         </div>
       </Link>
     </motion.div>
-  )
+  );
 }
 
-export default CourseCard 
+export default CourseCard;
