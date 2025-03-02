@@ -6,9 +6,9 @@ export async function GET(req: Request) {
   // Get token from cookies
   const token = getTokenFromCookies(req);
 
-  if (!token) {
-    return NextResponse.json({ message: "No token found" }, { status: 401 });
-  }
+  // if (!token) {
+  //   return NextResponse.json({ message: "No token found" }, { status: 401 });
+  // }
 
   try {
     const res = await fetch("http://localhost:5000/api/categories", {

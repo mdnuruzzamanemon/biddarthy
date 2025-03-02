@@ -41,7 +41,7 @@ const AboutPage = () => {
             About Our Instructor
           </h1>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Meet the expert behind Biddarthy's success
+           {" Meet the expert behind Biddarthi's success"}
           </p>
         </motion.div>
 
@@ -99,23 +99,19 @@ const AboutPage = () => {
 
             <div className="space-y-4 text-gray-300">
               <p>
-                Milton Khandokar is a renowned educator with over X years of experience
-                in preparing students for medical and university admissions. His unique
-                teaching methodology has helped thousands of students achieve their
-                academic goals.
+              medical and engineering university admissions as well as general university admission preparation. His unique teaching methodology has helped thousands of students achieve their academic goals.
+
+As the founder of Biddarthy, he has developed comprehensive study materials and innovative teaching techniques that make complex topics easy to understand. His dedication to student success has made him one of the most respected educators in Bangladesh.
               </p>
 
               <p>
-                As the founder of Biddarthy, he has developed comprehensive study
-                materials and innovative teaching techniques that make complex topics
-                easy to understand. His dedication to student success has made him one
-                of the most respected educators in Bangladesh.
+              Milton Khandokar holds a BSc in Textile Engineering from BUTEX and has extensive experience as a Chemistry Lecturer at BP Dream School.
               </p>
 
               <div className="space-y-2">
                 <h3 className="text-white font-semibold">Specializations:</h3>
                 <ul className="list-disc list-inside space-y-1">
-                  <li>Medical Admission Test Preparation</li>
+                  <li>Engineering Admission Test Preparation</li>
                   <li>University Admission Guidance</li>
                   <li>Mathematics and Science Education</li>
                   <li>Strategic Exam Preparation</li>
@@ -123,12 +119,11 @@ const AboutPage = () => {
               </div>
 
               <div className="space-y-2">
-                <h3 className="text-white font-semibold">Achievements:</h3>
+                <h3 className="text-white font-semibold">Previously worked as:</h3>
                 <ul className="list-disc list-inside space-y-1">
-                  <li>Guided 1000+ students to medical colleges</li>
-                  <li>Developed innovative study materials</li>
-                  <li>Featured in various educational platforms</li>
-                  <li>Conducted numerous successful workshops</li>
+                  <li>Ex-Chemistry Lecturer at Udvash Academic and Admission Care (2 years)</li>
+                  <li>Ex-Chemistry Instructor at 10 Minute School (1 year)</li>
+                  <li>Ex-Chemistry Instructor at Battles of Biology (8 months)</li>
                 </ul>
               </div>
             </div>

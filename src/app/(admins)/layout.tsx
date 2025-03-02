@@ -22,13 +22,9 @@ export default function AdminLayout({
   
 
   return (
-    <html lang="en">
-      <body className={roboto.className}>
-        <main >
+        <main suppressHydrationWarning={true}>
           {children}
         </main>
 
-      </body>
-    </html>
   );
 }

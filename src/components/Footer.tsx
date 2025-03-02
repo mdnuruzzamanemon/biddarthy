@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { FaFacebook, FaYoutube, FaInstagram, FaLinkedin } from 'react-icons/fa'
-import logo from "../app/client/images/logo.jpg"
+import { FaFacebook, FaYoutube, FaTelegram } from 'react-icons/fa'
+import logo from "../app/client/images/logo.svg"
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -18,10 +18,10 @@ const Footer = () => {
   ]
 
   const socialLinks = [
-    { name: 'Facebook', icon: FaFacebook, href: 'https://facebook.com/biddarthy' },
-    { name: 'YouTube', icon: FaYoutube, href: 'https://youtube.com/biddarthy' },
-    { name: 'Instagram', icon: FaInstagram, href: 'https://instagram.com/biddarthy' },
-    { name: 'LinkedIn', icon: FaLinkedin, href: 'https://linkedin.com/company/biddarthy' },
+    { name: 'Facebook', icon: FaFacebook, href: 'https://www.facebook.com/share/g/121DBgKH79p/' },
+    { name: 'YouTube', icon: FaYoutube, href: 'https://youtube.com/@miltonkhandokar-biddarthi?si=NsileSOVoEPNiieO' },
+    { name: 'Telegram', icon: FaTelegram, href: 'https://t.me/+5UIb19Smgvc1MDk1' },
+    // { name: 'LinkedIn', icon: FaLinkedin, href: 'https://linkedin.com/company/biddarthy' },
   ]
 
   return (
@@ -66,8 +66,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <div className="space-y-2 text-gray-300">
               <p>Email: info@biddarthy.com</p>
-              <p>Phone: +880 1234-567890</p>
-              <p>Address: Your Address Here,<br />City, Country</p>
+              <p>Phone: +880 1846-838507</p>
+              <p>Address: Farmgate,<br />Dhaka, Bangladesh</p>
             </div>
           </div>
 

@@ -6,7 +6,7 @@ import FAQ from '@/components/FAQ'
 
 export default function Home() {
   return (
-    <main>
+    <main >
       <Header />
       <Banner />
       <TrendingCourses />

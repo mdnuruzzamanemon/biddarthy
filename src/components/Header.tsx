@@ -12,14 +12,17 @@ const Header = () => {
     const [loopNum, setLoopNum] = useState(0)
     const [typingSpeed, setTypingSpeed] = useState(150)
 
-    const textArray = [
-        'Medical Admission Preparation',
-        'University Admission Preparation',
-        'Job Preparation',
-        'Skill Development Courses'
-    ]
+    
 
     useEffect(() => {
+
+        const textArray = [
+            'SSC Exam Preparation',
+            'HSC Exam Preparation',
+            'University Admission Preparation',
+            'Engineering Admission Preparation',
+        ]
+
         const handleTyping = () => {
             const current = loopNum % textArray.length
             const fullText = textArray[current]
@@ -42,7 +45,7 @@ const Header = () => {
 
         const timer = setTimeout(handleTyping, typingSpeed)
         return () => clearTimeout(timer)
-    }, [text, isDeleting, loopNum, typingSpeed, textArray])
+    }, [text, isDeleting, loopNum, typingSpeed])
 
     return (
         <div className="relative min-h-[95vh] flex items-center overflow-hidden px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#13284D] to-[#0A192F]">
@@ -55,7 +58,7 @@ const Header = () => {
                         transition={{ duration: 0.8 }}
                         className="text-5xl md:text-7xl font-bold mb-8 text-white"
                     >
-                        Welcome to Biddarthy
+                        Welcome to Biddarthi
                     </motion.h1>
 
                     <motion.div
@@ -71,7 +74,7 @@ const Header = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
-                        className="text-3xl md:text-4xl font-semibold text-yellow-400 min-h-[80px] mb-10"
+                        className="text-3xl md:text-4xl font-semibold text-[#f4bc45] min-h-[80px] mb-10"
                     >
                         <span className="inline-block min-h-[1.2em]">{text}</span>
                         <span className="animate-pulse">|</span>

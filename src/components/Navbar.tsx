@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiMenu, HiX } from 'react-icons/hi'
-import logo from "../app/client/images/logo.jpg";
+import logo from "../app/client/images/logo.svg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
