@@ -126,7 +126,7 @@ export default function DemoClassPage() {
               <TableCell>{demoClass.videoLink}</TableCell>
               <TableCell>
                 {/* {categories.find((cat) => cat._id === demoClass.category)?.categoryName || "Unknown"} */}
-                {demoClass.category.categoryName}
+                {typeof demoClass.category === "string" ? "Unknown" : demoClass.category.categoryName}
               </TableCell>
               <TableCell>{demoClass.instructor}</TableCell>
               <TableCell>

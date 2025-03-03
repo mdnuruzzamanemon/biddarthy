@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { courseId: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ courseId: string }> }) {
   const { courseId } = await params;
 
   if (!courseId) {

@@ -127,11 +127,11 @@ export default function CourseManagement() {
     formData.append("discountPrice", updatedCourse.discountPrice?.toString() || "");
     formData.append("description", updatedCourse.description);
     formData.append("instructor", updatedCourse.instructor);
-    formData.append("discountEndsAt", updatedCourse.discountEndsAt ? updatedCourse.discountEndsAt.toISOString() : "");
+    formData.append("discountEndsAt", updatedCourse.discountEndsAt ? new Date(updatedCourse.discountEndsAt).toISOString() : "");
     formData.append("demoVideo", updatedCourse.demoVideo || "");
     formData.append("category", updatedCourse.category._id); 
 
-    if (updatedCourse.thumbnail instanceof File) {
+    if (updatedCourse.thumbnail && typeof updatedCourse.thumbnail === 'object' && (updatedCourse.thumbnail as any) instanceof File) {
       formData.append("thumbnail", updatedCourse.thumbnail);
     }
 

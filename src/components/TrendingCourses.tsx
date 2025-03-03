@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import CourseCard from './CourseCard'
-import thumbnailFallback from "../app/client/images/bannerimg.jpg"
+
 
 interface TrendingItem {
   _id: string
@@ -50,7 +50,7 @@ const TrendingCourses = () => {
               id: course._id,
               title: course.title,
               // Use thumbnail from API; fallback if missing
-              thumbnail: course.thumbnail || thumbnailFallback,
+              thumbnail: course.thumbnail,
               price,
               discountPrice,
               discountPercentage,

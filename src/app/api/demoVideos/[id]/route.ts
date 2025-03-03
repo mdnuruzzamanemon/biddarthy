@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }>  }) {
   const { id } = await params;
   const { title, videoLink, category, instructor } = await req.json();
 
@@ -11,7 +11,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
   const token = getTokenFromCookies(req);
   if (!token) {
-    return NextResponse.json({ message: "No token found" }, { status: 401 });
+        return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 
   try {
@@ -33,7 +33,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }>  }) {
   const { id } = await params;
 
   if (!id) {
@@ -42,7 +42,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
 
   const token = getTokenFromCookies(req);
   if (!token) {
-    return NextResponse.json({ message: "No token found" }, { status: 401 });
+        return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 
   try {

@@ -35,7 +35,8 @@ export async function POST(req: Request) {
   const token = getTokenFromCookies(req);
 
   if (!token) {
-    return NextResponse.json({ message: "No token found" }, { status: 401 });
+    // return NextResponse.json({ message: "No token found" }, { status: 401 });
+    return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 
   try {

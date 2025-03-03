@@ -29,7 +29,7 @@ type Category = {
 };
 
 type CategoryComboboxProps = {
-    value: string;
+    value: string | Category;
     onChange: (value: string) => void;
 };
 
