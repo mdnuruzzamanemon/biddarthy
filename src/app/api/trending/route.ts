@@ -4,7 +4,7 @@ import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 // GET request: Get all trending courses (Max 4)
 export async function GET(req: Request) {
   try {
-    const res = await fetch("http://localhost:5000/api/trending");
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/trending`);
     const data = await res.json();
 
     if (!res.ok) throw new Error(data.message || "Failed to fetch trending courses");
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/trending/add", {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/trending/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

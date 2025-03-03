@@ -8,7 +8,7 @@ export async function GET(req: Request, { params }: { params: { courseId: string
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/enrollments/count/${courseId}`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/enrollments/count/${courseId}`, {
       method: "GET",
     });
 

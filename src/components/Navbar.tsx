@@ -60,12 +60,12 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              <Link
+              {/* <Link
                 href="/login"
                 className="bg-[#f4bc45] text-[#13284D] px-4 py-2 rounded-md text-md font-medium hover:bg-opacity-90 transition-colors"
               >
                 Login
-              </Link>
+              </Link> */}
             </div>
           </div>
 
@@ -103,13 +103,13 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              <Link
+              {/* <Link
                 href="/login"
                 className="bg-white text-[#13284D] block px-3 py-2 rounded-md text-base font-medium hover:bg-opacity-90"
                 onClick={() => setIsOpen(false)}
               >
                 Login
-              </Link>
+              </Link> */}
             </div>
           </motion.div>
         )}

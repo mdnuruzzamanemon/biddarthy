@@ -15,7 +15,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/demovideos/${id}`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/demovideos/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/demovideos/${id}`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/demovideos/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,

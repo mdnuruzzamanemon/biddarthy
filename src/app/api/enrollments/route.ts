@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/enrollments", {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/enrollments`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
   const { courseId, name, email, phone, transactionId } = await req.json();
 
   try {
-    const res = await fetch("http://localhost:5000/api/enrollments", {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/enrollments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

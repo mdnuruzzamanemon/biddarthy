@@ -17,7 +17,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/categories/${id}`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/categories/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
 
   try {
     // Check if the category is associated with any courses or demo videos
-    const checkRes = await fetch(`http://localhost:5000/api/categories/check-dependencies/${id}`, {
+    const checkRes = await fetch(`${process.env.BACKEND_API_URL}/api/categories/check-dependencies/${id}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -72,7 +72,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     }
 
     // Proceed with deletion if no dependencies
-    const deleteRes = await fetch(`http://localhost:5000/api/categories/${id}`, {
+    const deleteRes = await fetch(`${process.env.BACKEND_API_URL}/api/categories/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,

@@ -14,7 +14,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     }
   
     try {
-      const res = await fetch(`http://localhost:5000/api/trending/${id}`, {
+      const res = await fetch(`${process.env.BACKEND_API_URL}/api/trending/${id}`, {
         method: "DELETE", // ✅ Change from POST to DELETE
         headers: {
           "Authorization": `Bearer ${token}`,

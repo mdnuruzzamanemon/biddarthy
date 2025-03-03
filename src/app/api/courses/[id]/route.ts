@@ -11,7 +11,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   // }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/courses/${id}`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/courses/${id}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -62,7 +62,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/courses/${id}`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/courses/${id}`, {
       method: "PUT",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -89,7 +89,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/courses/${id}`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/courses/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,

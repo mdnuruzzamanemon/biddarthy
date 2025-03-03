@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 
 // API Base URL (Backend Server)
-const API_URL = "http://localhost:5000/api/homebanner"; 
+const API_URL = `${process.env.BACKEND_API_URL}/api/homebanner`; 
 
 // GET: Fetch Home Banner
 export async function GET(req: Request) {

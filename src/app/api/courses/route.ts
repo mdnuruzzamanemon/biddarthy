@@ -9,7 +9,7 @@ export async function GET(req: Request) {
   // }
 
   try {
-    const res = await fetch("http://localhost:5000/api/courses", {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/courses`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/courses", {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/courses`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,

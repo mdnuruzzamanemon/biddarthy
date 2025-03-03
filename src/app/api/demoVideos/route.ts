@@ -4,7 +4,7 @@ import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 // GET request: Get all demo videos
 export async function GET(req: Request) {
   try {
-    const res = await fetch("http://localhost:5000/api/demovideos");
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/demovideos`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || "Failed to fetch demo videos");
 
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/demovideos", {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/demovideos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -11,7 +11,7 @@ export async function GET(req: Request) {
   // }
 
   try {
-    const res = await fetch("http://localhost:5000/api/categories", {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/categories`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/categories", {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/categories`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { FaFacebook, FaYoutube, FaLinkedin } from 'react-icons/fa'
+import { FaFacebook, FaYoutube, FaGlobe } from 'react-icons/fa'
 
 import miltonImg from "@/app/client/images/milton.jpg"
 
@@ -11,19 +11,19 @@ const AboutPage = () => {
     {
       name: 'Facebook',
       icon: FaFacebook,
-      url: 'https://facebook.com/miltonkhandokar',
+      url: 'https://www.facebook.com/milton.khandokar.14',
       color: 'hover:text-blue-500'
     },
     {
       name: 'YouTube',
       icon: FaYoutube,
-      url: 'https://youtube.com/@miltonkhandokar',
+      url: 'https://youtube.com/@milton-khandokar?si=kKYFd-0_wqaVand7',
       color: 'hover:text-red-500'
     },
     {
       name: 'LinkedIn',
-      icon: FaLinkedin,
-      url: 'https://linkedin.com/in/miltonkhandokar',
+      icon: FaGlobe,
+      url: 'https://www.bangla-kobita.com/milton/',
       color: 'hover:text-blue-400'
     }
   ]
@@ -130,8 +130,8 @@ As the founder of Biddarthy, he has developed comprehensive study materials and 
 
             {/* Quote */}
             <blockquote className="border-l-4 border-green-400 pl-4 italic text-gray-300">
-              "My goal is to make quality education accessible to every aspiring student
-              and help them achieve their dreams through dedicated guidance and support."
+              &quot;My goal is to make quality education accessible to every aspiring student
+              and help them achieve their dreams through dedicated guidance and support.&quot;
             </blockquote>
           </motion.div>
         </div>
