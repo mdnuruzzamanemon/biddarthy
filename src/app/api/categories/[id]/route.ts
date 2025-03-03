@@ -35,6 +35,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
+
+
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   const { id } = await params;
 
@@ -50,17 +52,38 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/categories/${id}`, {
+    // Check if the category is associated with any courses or demo videos
+    const checkRes = await fetch(`http://localhost:5000/api/categories/check-dependencies/${id}`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    const checkData = await checkRes.json();
+    
+    if (!checkRes.ok) throw new Error(checkData.message || "Failed to check category dependencies");
+
+    if (checkData.hasDependencies) {
+      return NextResponse.json(
+        { message: "Cannot delete category. It is referenced by courses or demo videos." },
+        { status: 400 }
+      );
+    }
+
+    // Proceed with deletion if no dependencies
+    const deleteRes = await fetch(`http://localhost:5000/api/categories/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,
       },
     });
 
-    if (!res.ok) throw new Error("Failed to delete category");
+    if (!deleteRes.ok) throw new Error("Failed to delete category");
 
     return NextResponse.json({ message: "Category deleted successfully" });
   } catch (error: any) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+
