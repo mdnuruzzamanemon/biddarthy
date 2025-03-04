@@ -187,8 +187,8 @@ const EnrollmentPage = ({ params }: { params: Promise<{ id: string }> }) => {
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <h2 className="text-2xl font-semibold mb-4 text-white">Enrollment Successful!</h2>
-          <p className="text-gray-300 mb-4">Thank you for enrolling. Please join our group using the link below for further instructions.</p>
-          <a href="https://example.com/group-link" target="_blank" rel="noopener noreferrer" className="text-[#f4bc45] hover:underline">
+          <p className="text-gray-300 mb-4">Thank you for enrolling. Please join our telegram group using the link below for further instructions. You will get a confirmation mail soon.</p>
+          <a href="https://t.me/+P7eho8F8mSM1NzU1" target="_blank" rel="noopener noreferrer" className="text-[#f4bc45] hover:underline">
             Join the Group
           </a>
         </Modal>

@@ -26,7 +26,7 @@ const testimonials = [
     id: 2,
     name: 'Anika Rahman',
     image: userImg,
-    course: 'University Admission',
+    course: 'Engineering Admission',
     college: 'BUET',
     feedback: 'The problem-solving strategies and detailed explanations made complex topics easy to understand. Biddarthy played a crucial role in my admission.',
     year: '2023'
@@ -44,7 +44,7 @@ const testimonials = [
     id: 4,
     name: 'Farhana Jahan',
     image: userImg,
-    course: 'Skill Development - Web Development',
+    course: 'University Admission',
     college: 'Rajshahi University',
     feedback: 'The hands-on projects and industry-focused curriculum helped me land my first job as a front-end developer.',
     year: '2023'
@@ -62,7 +62,7 @@ const testimonials = [
     id: 6,
     name: 'Nusrat Jahan',
     image: userImg,
-    course: 'Medical Admission Test',
+    course: 'University Admission',
     college: 'Chittagong University',
     feedback: 'The extensive question bank and live doubt-clearing sessions were game-changers for my medical entrance preparation.',
     year: '2023'

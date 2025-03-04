@@ -76,7 +76,7 @@ export default function CoursePage() {
   const discountPercentage = Math.round(((course.price - course.discountPrice) / course.price) * 100);
 
   return (
-    <div className="min-h-screen bg-[#0A192F] pt-10 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#0A192F] pt-2 flex items-center justify-center px-4">
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         {/* Left Card - Video & Enrollment */}
