@@ -20,7 +20,7 @@ export async function POST(req: Request) {
   const { courseId } = await req.json();
 
   // Get token from cookies (for admin authentication)
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
   if (!token) {
         return NextResponse.redirect(new URL("/admin/login", req.url));
   }

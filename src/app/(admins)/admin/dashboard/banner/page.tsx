@@ -10,9 +10,9 @@ import { MoreHorizontal, Trash } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 // Helper function to get token from cookies
-const getToken = () => {
-  return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
-};
+// const getToken = () => {
+//   return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+// };
 
 type Banner = {
   _id: string;
@@ -59,11 +59,11 @@ export default function BannerPage() {
       return;
     }
 
-    const token = getToken();
-    if (!token) {
-      alert("Unauthorized. No token found.");
-      return;
-    }
+    // const token = getToken();
+    // if (!token) {
+    //   alert("Unauthorized. No token found.");
+    //   return;
+    // }
 
     setLoading(true);
     const formData = new FormData();
@@ -72,9 +72,6 @@ export default function BannerPage() {
     try {
       const res = await fetch("/api/homebanner", {
         method: "POST",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
         body: formData, // Important: Send as FormData
       });
 
@@ -93,19 +90,16 @@ export default function BannerPage() {
   };
 
   const handleDelete = async () => {
-    const token = getToken();
-    if (!token) {
-      alert("Unauthorized. No token found.");
-      return;
-    }
+    // const token = getToken();
+    // if (!token) {
+    //   alert("Unauthorized. No token found.");
+    //   return;
+    // }
 
     setLoading(true);
     try {
       const res = await fetch("/api/homebanner", {
         method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
       });
 
       if (res.ok) {

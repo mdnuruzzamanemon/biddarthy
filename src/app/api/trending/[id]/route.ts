@@ -8,7 +8,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
       return NextResponse.json({ message: "Trending Course ID is required" }, { status: 400 });
     }
   
-    const token = getTokenFromCookies(req);
+    const token = await getTokenFromCookies(req);
     if (!token) {
           return NextResponse.redirect(new URL("/admin/login", req.url));
     }

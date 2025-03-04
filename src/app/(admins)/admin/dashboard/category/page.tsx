@@ -9,9 +9,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Edit, Trash } from "lucide-react";
 
 // Helper function to get token from cookies
-const getToken = () => {
-  return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
-};
+// const getToken = () => {
+//   return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+// };
 
 type Category = {
   _id: string;
@@ -60,19 +60,16 @@ export default function CategoryTable() {
 
   // Handle Delete category
   const handleDelete = async (_id: string) => {
-    const token = getToken();
-    if (!token) {
-      alert("Unauthorized. No token found.");
-      return;
-    }
+    // const token = getToken();
+    // if (!token) {
+    //   alert("Unauthorized. No token found.");
+    //   return;
+    // }
 
     setLoading(true);
     try {
       const res = await fetch(`/api/categories/${_id}`, {
         method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
       });
 
       if (res.ok) {
@@ -93,11 +90,11 @@ export default function CategoryTable() {
     if (categoryName.trim() === "") return;
 
     const categoryData = { categoryName };
-    const token = getToken();
-    if (!token) {
-      alert("Unauthorized. No token found.");
-      return;
-    }
+    // const token = getToken();
+    // if (!token) {
+    //   alert("Unauthorized. No token found.");
+    //   return;
+    // }
 
     setLoading(true);
     try {
@@ -108,7 +105,7 @@ export default function CategoryTable() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            
           },
           body: JSON.stringify(categoryData),
         });
@@ -118,7 +115,7 @@ export default function CategoryTable() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            
           },
           body: JSON.stringify(categoryData),
         });

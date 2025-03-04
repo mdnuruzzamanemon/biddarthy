@@ -3,7 +3,7 @@ import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 
 // GET all courses
 export async function GET(req: Request) {
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
   // if (!token) {
   //       return NextResponse.redirect(new URL("/admin/login", req.url));
   // }
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
   const demoVideo = formData.get("demoVideo");
   const thumbnail = formData.get("thumbnail"); // Expecting a file
 
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
   if (!token) {
         return NextResponse.redirect(new URL("/admin/login", req.url));
   }

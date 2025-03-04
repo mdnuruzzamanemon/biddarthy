@@ -9,7 +9,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     return NextResponse.json({ message: "Invalid request" }, { status: 400 });
   }
 
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
   if (!token) {
         return NextResponse.redirect(new URL("/admin/login", req.url));
   }
@@ -39,7 +39,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     return NextResponse.json({ message: "Enrollment ID is required" }, { status: 400 });
   }
 
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
   if (!token) {
         return NextResponse.redirect(new URL("/admin/login", req.url));
   }

@@ -33,16 +33,31 @@ import {jwtDecode} from "jwt-decode"; // Decode JWT token
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [user, setUser] = React.useState<any>(null);
 
+
   React.useEffect(() => {
-    const cookies = parseCookies();
-    const token = cookies.token; // Read token from cookies
+    // const token = cookies.token; // Read token from cookies
+    async function fetchUser() {
 
-    if (token) {
-      const decoded: any = jwtDecode(token); // Decode JWT
-      setUser(decoded); // Store decoded user info
+      const data = await fetch('/api/auth/user', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const user = await data.json();
+      // console.log(user);
+      // setUser(user);
+      if (user.token) {
+        const decoded: any = jwtDecode(user.token); // Decode JWT
+        setUser(decoded); // Store decoded user info
+      }
     }
-  }, []);
+    fetchUser();
+    
 
+   
+  }, []);
+  // console.log(user);
   if (!user) return <p>Loading sidebar...</p>;
 
   // This is sample data.

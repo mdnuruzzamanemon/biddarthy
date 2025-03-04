@@ -23,7 +23,7 @@ const Banner = () => {
         const res = await fetch('/api/homebanner'); 
         const data = await res.json();
         if (data?.image) {
-          setBanner({ ...data, image: `http://localhost:5000/${data.image}` });
+          setBanner({ ...data, image: `https://api.biddarthi.org/${data.image}` });
         }
       } catch (error) {
         console.error('Error fetching banner image:', error);

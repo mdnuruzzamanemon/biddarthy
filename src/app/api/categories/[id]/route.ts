@@ -10,7 +10,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   }
 
   // Get token from cookies
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
 
   if (!token) {
     // return NextResponse.json({ message: "No token found" }, { status: 401 });
@@ -47,7 +47,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
   }
 
   // Get token from cookies
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
 
   if (!token) {
     // return NextResponse.json({ message: "No token found" }, { status: 401 });

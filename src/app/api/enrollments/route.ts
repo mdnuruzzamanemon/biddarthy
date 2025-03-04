@@ -3,7 +3,7 @@ import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 
 // GET request: Get all enrollments (Admin only)
 export async function GET(req: Request) {
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
 
   if (!token) {
         return NextResponse.redirect(new URL("/admin/login", req.url));

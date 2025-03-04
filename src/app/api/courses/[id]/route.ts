@@ -4,7 +4,7 @@ import { getTokenFromCookies } from "@/lib/utils/getTokenFromCookies";
 // GET single course by ID
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params; // Await the Promise to access 'id'
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
 
   // if (!token) {
   //   return NextResponse.json({ message: "No token found" }, { status: 401 });
@@ -39,7 +39,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const demoVideo = formData.get("demoVideo");
   const thumbnail = formData.get("thumbnail");
 
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
   if (!token) {
     return NextResponse.redirect(new URL("/admin/login", req.url));
   }
@@ -79,7 +79,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 // DELETE a course
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params; // Await the Promise to access 'id'
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
 
   if (!token) {
     return NextResponse.redirect(new URL("/admin/login", req.url));

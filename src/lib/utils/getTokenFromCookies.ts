@@ -1,6 +1,6 @@
-export const getTokenFromCookies = (req: Request): string | null => {
-    const cookies = req.headers.get("cookie") || "";
-    const tokenMatch = cookies.match(/token=([^;]+)/);
-    return tokenMatch ? tokenMatch[1] : null;
-  };
-  
+import { cookies } from "next/headers";
+
+export const getTokenFromCookies = async (req: Request): Promise<string | null> => {
+  const token = (await cookies()).get("token")?.value || null;
+  return token;
+};

@@ -6,7 +6,7 @@ const API_URL = `${process.env.BACKEND_API_URL}/api/homebanner`;
 
 // GET: Fetch Home Banner
 export async function GET(req: Request) {
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
   
   if (!token) {
         return NextResponse.redirect(new URL("/admin/login", req.url));
@@ -29,7 +29,7 @@ export async function GET(req: Request) {
 
 // POST: Upload New Banner
 export async function POST(req: Request) {
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
 
   if (!token) {
         return NextResponse.redirect(new URL("/admin/login", req.url));
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
 
 // DELETE: Remove Home Banner
 export async function DELETE(req: Request) {
-  const token = getTokenFromCookies(req);
+  const token = await getTokenFromCookies(req);
 
   if (!token) {
         return NextResponse.redirect(new URL("/admin/login", req.url));

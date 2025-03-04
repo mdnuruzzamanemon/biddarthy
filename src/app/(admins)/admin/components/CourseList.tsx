@@ -75,7 +75,7 @@ export default function CourseList({ courses, onAddCourse, onEditCourse, onDelet
           <Card key={course._id} className="w-full sm:w-[260px]">
             <CardHeader>
               <Image
-                src={`http://localhost:5000/${course.thumbnail}`}
+                src={`https://api.biddarthi.org/${course.thumbnail}`}
                 alt={course.title}
                 width={0}
                 height={0}
