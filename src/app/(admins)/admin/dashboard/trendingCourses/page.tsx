@@ -87,7 +87,7 @@ export default function TrendingCoursesPage() {
             <Card key={item._id} className="w-full sm:w-[260px]">
               <CardHeader>
                 <Image
-                  src={`http://localhost:5000/${item.course.thumbnail}`}
+                  src={`https://api.biddarthi.org/${item.course.thumbnail}`}
                   alt={item.course.title}
                   width={300}
                   height={150}

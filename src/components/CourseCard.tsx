@@ -55,7 +55,7 @@ const CourseCard = ({
         <div className="relative w-full">
           <div className="w-full" style={{ paddingTop: '66.67%' }}>
             <Image
-              src={`http://localhost:5000/${thumbnail}`}
+              src={`https://api.biddarthi.org/${thumbnail}`}
               alt={title}
               fill
               className="object-cover"

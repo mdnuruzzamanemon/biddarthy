@@ -5,9 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
-        port: "5000",
+        protocol: "https",
+        hostname: "api.biddarthi.org",
         pathname: "/uploads/**", // Adjust this based on your API response
       },
     ],
