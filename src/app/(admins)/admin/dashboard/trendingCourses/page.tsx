@@ -47,9 +47,7 @@ export default function TrendingCoursesPage() {
     try {
       const res = await fetch(`/api/trending/${trendingId}`, {
         method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1")}`,
-        },
+        
       });
 
       if (!res.ok) {

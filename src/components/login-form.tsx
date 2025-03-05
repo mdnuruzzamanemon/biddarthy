@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +35,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
       }
 
       // Store token in cookies or localStorage
-      document.cookie = `token=${data.token}; path=/`;
+      // document.cookie = `token=${data.token}; path=/`;
 
       // Redirect to the dashboard
       router.push("/admin/dashboard");
