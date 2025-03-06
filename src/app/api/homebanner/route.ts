@@ -6,16 +6,11 @@ const API_URL = `${process.env.BACKEND_API_URL}/api/homebanner`;
 
 // GET: Fetch Home Banner
 export async function GET(req: Request) {
-  const token = await getTokenFromCookies(req);
   
-  if (!token) {
-        return NextResponse.redirect(new URL("/admin/login", req.url));
-  }
 
   try {
     const res = await fetch(API_URL, {
       method: "GET",
-      headers: { "Authorization": `Bearer ${token}` },
     });
 
     const data = await res.json();

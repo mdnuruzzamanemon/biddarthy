@@ -14,13 +14,13 @@ interface CourseCardProps {
   discountPercentage: number
 }
 
-const CourseCard = ({ 
-  id, 
-  title, 
-  thumbnail, 
-  price, 
-  discountPrice, 
-  discountPercentage 
+const CourseCard = ({
+  id,
+  title,
+  thumbnail,
+  price,
+  discountPrice,
+  discountPercentage
 }: CourseCardProps) => {
   const [enrolledStudents, setEnrolledStudents] = useState<number | null>(null);
 
@@ -44,7 +44,7 @@ const CourseCard = ({
   }, [id]);
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -5 }}
@@ -53,12 +53,13 @@ const CourseCard = ({
     >
       <Link href={`/courses/${id}`}>
         <div className="relative w-full">
-          <div className="w-full" style={{ paddingTop: '66.67%' }}>
+          <div className="w-full" >
             <Image
               src={`https://api.biddarthi.org/${thumbnail}`}
               alt={title}
-              fill
-              className="object-cover"
+              width={800} // Adjust width as needed
+              height={133} // Maintain aspect ratio (800:533 ~ 3:2)
+              className="w-full h-auto object-cover"
             />
           </div>
         </div>
@@ -66,7 +67,7 @@ const CourseCard = ({
           <h3 className="text-xl md:text-2xl font-medium text-white mb-4 line-clamp-2 min-h-[3.5rem]">
             {title}
           </h3>
-          
+
           <div className="flex items-center mb-4">
             <span className="text-lg text-gray-300">
               {enrolledStudents !== null ? `${enrolledStudents} students enrolled` : 'Loading...'}

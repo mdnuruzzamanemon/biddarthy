@@ -76,7 +76,7 @@ export default function CoursePage() {
   const discountPercentage = Math.round(((course.price - course.discountPrice) / course.price) * 100);
 
   return (
-    <div className="min-h-screen bg-[#0A192F] pt-2 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#0A192F] py-16 flex items-center justify-center px-4">
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         {/* Left Card - Video & Enrollment */}
@@ -84,7 +84,7 @@ export default function CoursePage() {
           initial={{ opacity: 0, y: 50 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.5 }}
-          className="bg-[#13284D] p-6 rounded-lg shadow-lg flex flex-col items-center"
+          className="bg-[#13284D] p-6 rounded-lg shadow-lg flex flex-col items-center h-fit"
         >
           <h3 className="text-2xl font-semibold text-white mb-4">Course Preview</h3>
           <div className="relative w-full pt-[56.25%] rounded-lg overflow-hidden">
