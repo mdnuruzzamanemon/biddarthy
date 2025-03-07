@@ -1,17 +1,5 @@
 {
-  "/page": "app/page.js",
-  "/api/homebanner/route": "app/api/homebanner/route.js",
-  "/api/trending/route": "app/api/trending/route.js",
-  "/api/enrollments/count/[courseId]/route": "app/api/enrollments/count/[courseId]/route.js",
-  "/courses/page": "app/courses/page.js",
-  "/api/categories/route": "app/api/categories/route.js",
-  "/api/courses/route": "app/api/courses/route.js",
-  "/(admins)/admin/login/page": "app/(admins)/admin/login/page.js",
-  "/api/auth/login/route": "app/api/auth/login/route.js",
-  "/(admins)/admin/dashboard/page": "app/(admins)/admin/dashboard/page.js",
-  "/api/auth/user/route": "app/api/auth/user/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/(admins)/admin/dashboard/addCourse/page": "app/(admins)/admin/dashboard/addCourse/page.js",
-  "/courses/[id]/page": "app/courses/[id]/page.js",
+  "/courses/[id]/enroll/page": "app/courses/[id]/enroll/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/api/courses/[id]/route": "app/api/courses/[id]/route.js"
 }

@@ -110,7 +110,7 @@ const EnrollmentPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0A192F] px-4 py-8">
-      <div className="bg-[#13284D] p-6 rounded-lg shadow-md w-full max-w-[90%] sm:max-w-[90%] md:max-w-[80%] mx-auto">
+      <div className="bg-[#13284D] p-6 rounded-lg shadow-md w-full max-w-[95%] sm:max-w-[95%] md:max-w-[80%] mx-auto">
         <h3 className="text-xl md:text-2xl font-semibold mb-4 text-white text-center">Enroll in Course</h3>
 
         {loading ? (
@@ -123,40 +123,34 @@ const EnrollmentPage = ({ params }: { params: Promise<{ id: string }> }) => {
               Please send <strong>৳{getCoursePrice()}</strong> to any of the following payment methods:
             </p>
 
-            <div className="grid md:grid-cols-3 gap-4 mb-6">
-              <div className="bg-gradient-to-br from-[#1A2E50] to-[#0A192F] p-4 rounded-lg border border-gray-700 hover:shadow-md hover:border-gray-500 transition-all duration-300">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="bg-white p-1.5 rounded-lg flex items-center justify-center w-10 h-10">
-                    <Image src={bkash} alt="bKash" width={28} height={28} className="object-contain" />
-                  </div>
-                  <p className="text-gray-200 font-medium">bKash</p>
+            <div className="grid lg:grid-cols-3 gap-3 mb-6 bg-[#0A192F] p-4 rounded-lg border border-gray-700">
+              <div className="flex items-center gap-3 p-2 hover:bg-[#172F50] rounded transition-colors">
+                <div className="p-2 rounded-full flex items-center justify-center w-12 h-12">
+                  <Image src={bkash} alt="bKash" width={32} height={32} className="object-contain" />
                 </div>
-                <div className="mt-2 bg-[#0A192F] p-2 rounded border border-gray-700 text-center">
-                  <p className="text-pink-300 font-medium tracking-wide">01989244327</p>
+                <div>
+                  <p className="text-gray-400 text-xs">bKash</p>
+                  <p className="text-gray-200 font-medium">+8801989244327</p>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-[#1A2E50] to-[#0A192F] p-4 rounded-lg border border-gray-700 hover:shadow-md hover:border-gray-500 transition-all duration-300">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="bg-white p-1.5 rounded-lg flex items-center justify-center w-10 h-10">
-                    <Image src={nagad} alt="Nagad" width={28} height={28} className="object-contain" />
-                  </div>
-                  <p className="text-gray-200 font-medium">Nagad</p>
+              <div className="flex items-center gap-3 p-2 hover:bg-[#172F50] rounded transition-colors">
+                <div className="p-2 rounded-full flex items-center justify-center w-12 h-12">
+                  <Image src={nagad} alt="Nagad" width={32} height={32} className="object-contain" />
                 </div>
-                <div className="mt-2 bg-[#0A192F] p-2 rounded border border-gray-700 text-center">
-                  <p className="text-orange-300 font-medium tracking-wide">01989244327</p>
+                <div>
+                  <p className="text-gray-400 text-xs">Nagad</p>
+                  <p className="text-gray-200 font-medium">+8801989244327</p>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-[#1A2E50] to-[#0A192F] p-4 rounded-lg border border-gray-700 hover:shadow-md hover:border-gray-500 transition-all duration-300">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="bg-white p-1.5 rounded-lg flex items-center justify-center w-10 h-10">
-                    <Image src={rocket} alt="Rocket" width={28} height={28} className="object-contain" />
-                  </div>
-                  <p className="text-gray-200 font-medium">Rocket</p>
+              <div className="flex items-center gap-3 p-2 hover:bg-[#172F50] rounded transition-colors">
+                <div className="p-2 rounded-full flex items-center justify-center w-12 h-12">
+                  <Image src={rocket} alt="Rocket" width={32} height={32} className="object-contain" />
                 </div>
-                <div className="mt-2 bg-[#0A192F] p-2 rounded border border-gray-700 text-center">
-                  <p className="text-purple-300 font-medium tracking-wide">01854454978</p>
+                <div>
+                  <p className="text-gray-400 text-xs">Rocket</p>
+                  <p className="text-gray-200 font-medium">+8801854454978</p>
                 </div>
               </div>
             </div>
