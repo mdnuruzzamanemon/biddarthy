@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import CountdownTimer from '@/components/CountdownTimer'
 import { Loader2 } from 'lucide-react'
+import ReactHtmlParser from 'react-html-parser';
 
 export default function CoursePage() {
   const router = useRouter();
@@ -78,22 +79,26 @@ export default function CoursePage() {
   return (
     <div className="min-h-screen bg-[#0A192F] py-16 flex items-center justify-center px-4">
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
+
         {/* Left Card - Video & Enrollment */}
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }} 
-          animate={{ opacity: 1, y: 0 }} 
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="bg-[#13284D] p-6 rounded-lg shadow-lg flex flex-col items-center h-fit"
         >
           <h3 className="text-2xl font-semibold text-white mb-4">Course Preview</h3>
-          <div className="relative w-full pt-[56.25%] rounded-lg overflow-hidden">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full rounded-lg"
-              src={course.demoVideo}
-              allowFullScreen
-            />
-          </div>
+          {course.demoVideo ? (
+            <div className="relative w-full pt-[56.25%] rounded-lg overflow-hidden">
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-lg"
+                src={course.demoVideo}
+                allowFullScreen
+              />
+            </div>
+          ) : (
+            <div className="text-gray-400 text-center p-4">No preview available</div>
+          )}
 
           <p className="text-gray-300 text-sm mt-4">
             <strong>{enrollmentCount}</strong> students enrolled
@@ -110,9 +115,9 @@ export default function CoursePage() {
         </motion.div>
 
         {/* Right Card - Course Details */}
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }} 
-          animate={{ opacity: 1, x: 0 }} 
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           className="bg-[#13284D] p-6 rounded-lg shadow-lg relative overflow-hidden mb-6"
         >
@@ -141,7 +146,7 @@ export default function CoursePage() {
           <p className="text-gray-300 text-lg">{course.instructor}</p>
 
           <h3 className="text-2xl font-semibold text-white mt-6 mb-2">Course Description</h3>
-          <p className="text-gray-300 leading-relaxed">{course.description}</p>
+          <p className="text-gray-300 leading-relaxed">{ReactHtmlParser(course.description)}</p>
         </motion.div>
 
       </div>

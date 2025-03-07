@@ -1,5 +1,22 @@
 {
-  "node": {},
+  "node": {
+    "0056ef1f693503895c17b1afe436aadf36f8fbd1b0": {
+      "workers": {
+        "app/(admins)/admin/dashboard/page": {
+          "moduleId": "[project]/.next-internal/server/app/(admins)/admin/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/lib/logout.ts [app-rsc] (ecmascript)\" } [app-rsc] (ecmascript)",
+          "async": false
+        },
+        "app/(admins)/admin/dashboard/addCourse/page": {
+          "moduleId": "[project]/.next-internal/server/app/(admins)/admin/dashboard/addCourse/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/lib/logout.ts [app-rsc] (ecmascript)\" } [app-rsc] (ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/(admins)/admin/dashboard/page": "action-browser",
+        "app/(admins)/admin/dashboard/addCourse/page": "action-browser"
+      }
+    }
+  },
   "edge": {},
   "encryptionKey": "IAXQHAdRDekb4Kuax4GVFqcjmZuXAXR7wrf8ZDnb0VY="
 }

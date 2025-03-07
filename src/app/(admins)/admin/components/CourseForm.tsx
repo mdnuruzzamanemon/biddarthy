@@ -10,6 +10,8 @@ import { format } from "date-fns";
 import { Course } from "@/app/(admins)/admin/components/types/courseType";
 import CategoryCombobox from "@/app/(admins)/admin/components/CategoryCombobox";
 
+import RichTextEditor from "./RichTextEditor";
+
 type CourseFormProps = {
   initialCourse?: Course | null;
   onCancel: () => void;
@@ -87,15 +89,7 @@ export default function CourseForm({ initialCourse, onCancel, onSave, categories
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium">Description</label>
-            <Input
-              placeholder="Course Description"
-              value={course.description || ""}
-              onChange={(e) => setCourse({ ...course, description: e.target.value })}
-              required
-            />
-          </div>
+          
 
           <div>
             <label className="block text-sm font-medium">Instructor</label>
@@ -130,7 +124,16 @@ export default function CourseForm({ initialCourse, onCancel, onSave, categories
               onChange={(e) => setCourse({ ...course, demoVideo: e.target.value })}
             />
           </div>
+
+          
         </div>
+        <div className="my-4">
+            <label className="block text-sm font-medium">Description</label>
+            <RichTextEditor
+              value={course.description || ""}
+              onChange={(value) => setCourse({ ...course, description: value })}
+            />
+          </div>
 
         <div className="flex justify-end mt-4">
           <Button type="submit">Save Course</Button>
