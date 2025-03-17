@@ -1,5 +1,0 @@
-{
-  "/courses/[id]/enroll/page": "app/courses/[id]/enroll/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/courses/[id]/route": "app/api/courses/[id]/route.js"
-}
