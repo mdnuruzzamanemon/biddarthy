@@ -1,35 +1,36 @@
-'use client'
+"use client";
 
-import { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { HiMenu, HiX } from 'react-icons/hi'
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { HiMenu, HiX } from "react-icons/hi";
 import logo from "../app/client/images/logo.svg";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
+        setIsOpen(false);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Courses', path: '/courses' },
-    { name: 'Demos', path: '/demos' },
-    { name: 'About', path: '/about' },
-  ]
+    { name: "Home", path: "/" },
+    { name: "Courses", path: "/courses" },
+    { name: "Material", path: "/material" },
+    { name: "Demos", path: "/demos" },
+    { name: "About", path: "/about" },
+  ];
 
   return (
     <nav className="bg-[#13284D] fixed w-full z-50 shadow-lg">
@@ -38,13 +39,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <Image 
-                src={logo} 
-                alt="Logo" 
-                width={100} 
-                height={100} 
-                
-              />
+              <Image src={logo} alt="Logo" width={100} height={100} />
             </Link>
           </div>
 
@@ -60,12 +55,12 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              {/* <Link
+              <Link
                 href="/login"
                 className="bg-[#f4bc45] text-[#13284D] px-4 py-2 rounded-md text-md font-medium hover:bg-opacity-90 transition-colors"
               >
                 Login
-              </Link> */}
+              </Link>
             </div>
           </div>
 
@@ -103,19 +98,19 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              {/* <Link
+              <Link
                 href="/login"
                 className="bg-white text-[#13284D] block px-3 py-2 rounded-md text-base font-medium hover:bg-opacity-90"
                 onClick={() => setIsOpen(false)}
               >
                 Login
-              </Link> */}
+              </Link>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar 
+export default Navbar;
