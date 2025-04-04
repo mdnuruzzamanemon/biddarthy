@@ -44,7 +44,7 @@ export default function MaterialPage() {
       setLoading(true);
       try {
         // Fetch materials
-        const materialsRes = await fetch("/api/materials");
+        const materialsRes = await fetch("/api/material");
         const materialsData = await materialsRes.json();
 
         // Fetch user enrollment status
