@@ -3,13 +3,25 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
 import logo from "../app/client/images/logo.svg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  // Check if current path matches the nav item path
+  const isActive = (path: string) => {
+    if (path === "/" && pathname === "/") return true;
+    if (path !== "/" && pathname.startsWith(path)) return true;
+    return false;
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -18,9 +30,28 @@ const Navbar = () => {
       }
     };
 
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    // In a real app, you would get this from your cart state
+    // This is just for demonstration
+    const getCartCount = () => {
+      const count = localStorage.getItem("cartCount");
+      setCartCount(count ? parseInt(count) : 0);
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("scroll", handleScroll);
+    getCartCount();
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -28,44 +59,96 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "Courses", path: "/courses" },
     { name: "Material", path: "/material" },
+    { name: "Shop", path: "/shop" },
     { name: "Demos", path: "/demos" },
     { name: "About", path: "/about" },
   ];
 
   return (
-    <nav className="bg-[#13284D] fixed w-full z-50 shadow-lg">
+    <nav
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-[#0A192F]/95 backdrop-blur-sm shadow-lg py-2"
+          : "bg-[#13284D] py-4"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <Image src={logo} alt="Logo" width={100} height={100} />
+              <Image
+                src={logo}
+                alt="Biddarthi Logo"
+                width={100}
+                height={40}
+                className="h-10 w-auto"
+              />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-1">
+            <div className="flex items-center space-x-1">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.path}
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-md font-medium transition-colors"
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors relative group ${
+                    isActive(item.path)
+                      ? "text-[#f4bc45]"
+                      : "text-gray-300 hover:text-white"
+                  }`}
                 >
                   {item.name}
+                  {isActive(item.path) && (
+                    <motion.div
+                      layoutId="navbar-indicator"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#f4bc45]"
+                      transition={{ type: "spring", duration: 0.6 }}
+                    />
+                  )}
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#f4bc45] scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
                 </Link>
               ))}
-              <Link
-                href="/login"
-                className="bg-[#f4bc45] text-[#13284D] px-4 py-2 rounded-md text-md font-medium hover:bg-opacity-90 transition-colors"
-              >
-                Login
-              </Link>
             </div>
+
+            {/* Cart Icon */}
+            <Link href="/cart">
+              <div className="relative p-2 text-gray-300 hover:text-white transition-colors">
+                <FaShoppingCart className="text-lg" />
+                {cartCount > 0 && (
+                  <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#f4bc45] text-[#0A192F] text-xs flex items-center justify-center font-bold">
+                    {cartCount}
+                  </div>
+                )}
+              </div>
+            </Link>
+
+            {/* Login Button */}
+            <Link
+              href="/login"
+              className="ml-4 bg-[#f4bc45] text-[#13284D] px-4 py-2 rounded-md text-sm font-medium hover:bg-opacity-90 transition-colors flex items-center"
+            >
+              <FaUser className="mr-2" />
+              Login
+            </Link>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-4">
+            {/* Cart Icon for Mobile */}
+            <Link href="/cart">
+              <div className="relative p-2 text-gray-300 hover:text-white transition-colors">
+                <FaShoppingCart className="text-lg" />
+                {cartCount > 0 && (
+                  <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#f4bc45] text-[#0A192F] text-xs flex items-center justify-center font-bold">
+                    {cartCount}
+                  </div>
+                )}
+              </div>
+            </Link>
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-300 hover:text-white p-2"
@@ -81,18 +164,22 @@ const Navbar = () => {
         {isOpen && (
           <motion.div
             ref={menuRef}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden fixed top-16 right-0 h-full w-64 bg-[#13284D] shadow-lg"
+            className="md:hidden overflow-hidden bg-[#0A192F] border-t border-gray-800"
           >
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.path}
-                  className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className={`block px-3 py-2 rounded-md text-base font-medium ${
+                    isActive(item.path)
+                      ? "bg-[#f4bc45]/10 text-[#f4bc45]"
+                      : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                  }`}
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}
@@ -100,7 +187,7 @@ const Navbar = () => {
               ))}
               <Link
                 href="/login"
-                className="bg-white text-[#13284D] block px-3 py-2 rounded-md text-base font-medium hover:bg-opacity-90"
+                className="block w-full mt-4 bg-[#f4bc45] text-[#13284D] px-3 py-2 rounded-md text-base font-medium hover:bg-opacity-90 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Login
