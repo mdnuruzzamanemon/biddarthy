@@ -64,7 +64,7 @@ interface Stat {
 // Sample Data
 const sampleInstructors: Instructor[] = [
   {
-    _id: "instr1",
+    _id: "1",
     name: "Dr. Sarah Johnson",
     designation: "Professor of Computer Science",
     image: "/images/instructors/instructor1.jpg",
@@ -84,7 +84,7 @@ const sampleInstructors: Instructor[] = [
     },
   },
   {
-    _id: "instr2",
+    _id: "2",
     name: "Prof. Michael Chen",
     designation: "Associate Professor of Mathematics",
     image: "/images/instructors/instructor2.jpg",
@@ -102,7 +102,7 @@ const sampleInstructors: Instructor[] = [
     },
   },
   {
-    _id: "instr3",
+    _id: "3",
     name: "Dr. Emily Rodriguez",
     designation: "Assistant Professor of Physics",
     image: "/images/instructors/instructor3.jpg",
@@ -117,7 +117,7 @@ const sampleInstructors: Instructor[] = [
     rating: 4.8,
   },
   {
-    _id: "instr4",
+    _id: "4",
     name: "Dr. James Wilson",
     designation: "Professor of Chemistry",
     image: "/images/instructors/instructor4.jpg",
@@ -132,7 +132,7 @@ const sampleInstructors: Instructor[] = [
     rating: 4.6,
   },
   {
-    _id: "instr5",
+    _id: "5",
     name: "Prof. Lisa Thompson",
     designation: "Professor of Literature",
     image: "/images/instructors/instructor5.jpg",
@@ -151,7 +151,7 @@ const sampleInstructors: Instructor[] = [
     },
   },
   {
-    _id: "instr6",
+    _id: "6",
     name: "Dr. Robert Martinez",
     designation: "Associate Professor of Economics",
     image: "/images/instructors/instructor6.jpg",
