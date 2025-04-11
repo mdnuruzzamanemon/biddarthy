@@ -28,7 +28,7 @@ export default function InstructorContent({
         {/* Navigation */}
         <div className="mb-8">
           <Link
-            href="/instructors"
+            href="/instructor"
             className="inline-flex items-center text-gray-400 hover:text-[#f4bc45] transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
