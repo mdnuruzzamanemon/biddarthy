@@ -1,14 +1,18 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import Lottie from "lottie-react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import chemistryAnimation from "../../animations/Animation - 1737788326125.json";
 
+// Dynamically import Lottie with no SSR
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
+
 const Header = () => {
   const [currentPhrase, setCurrentPhrase] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -26,6 +30,7 @@ const Header = () => {
   ];
 
   useEffect(() => {
+    setIsMounted(true);
     const interval = setInterval(() => {
       setCurrentPhrase((prev) => (prev + 1) % phrases.length);
     }, 3000);
@@ -186,11 +191,13 @@ const Header = () => {
 
               {/* Animation container */}
               <div className="relative bg-gradient-to-br from-[#13284D] to-[#0A192F] p-6 rounded-xl border border-[#f4bc45]/30 shadow-[0_0_50px_rgba(244,188,69,0.1)]">
-                <Lottie
-                  animationData={chemistryAnimation}
-                  loop={true}
-                  className="w-full h-full max-w-md mx-auto"
-                />
+                {isMounted && (
+                  <Lottie
+                    animationData={chemistryAnimation}
+                    loop={true}
+                    className="w-full h-full max-w-md mx-auto"
+                  />
+                )}
 
                 {/* Floating elements */}
                 <motion.div
