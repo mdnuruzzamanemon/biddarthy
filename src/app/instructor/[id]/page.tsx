@@ -298,8 +298,15 @@ const sampleInstructors: Record<string, Instructor> = {
 };
 
 // Server component to fetch the data
-export default function InstructorPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function InstructorPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  // Await the params promise to get the id
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
+
   const instructor = sampleInstructors[id] || null;
 
   if (!instructor) {
@@ -326,3 +333,7 @@ export default function InstructorPage({ params }: { params: { id: string } }) {
 }
 
 // Now create a separate file for the client component: src/app/instructor/[id]/InstructorContent.tsx
+export interface PageProps {
+  params?: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
