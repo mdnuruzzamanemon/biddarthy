@@ -12,7 +12,7 @@ import {
   Pagination,
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import userImg from "../app/client/images/user1.png";
+import userImg from "../../app/client/images/user1.png";
 
 // Import Swiper styles
 import "swiper/css";

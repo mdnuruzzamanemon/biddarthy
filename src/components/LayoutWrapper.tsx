@@ -1,24 +1,28 @@
 "use client";
 
+import Footer from "@/components/landing/Footer";
+import Navbar from "@/components/landing/Navbar";
 import { usePathname } from "next/navigation";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
-export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
-    const pathname = usePathname();
-    const isAdminRoute = pathname.startsWith("/admin");
+export default function LayoutWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname.startsWith("/admin");
 
-    return (
+  return (
+    <>
+      {!isAdminRoute ? (
         <>
-
-            {!isAdminRoute ? 
-            (<><Navbar /><main className="pt-16">
-                {children}
-            </main><Footer /></>) : 
-            (<main>
-                {children}
-            </main>)}
-
+          <Navbar />
+          <main className="pt-16">{children}</main>
+          <Footer />
         </>
-    );
+      ) : (
+        <main>{children}</main>
+      )}
+    </>
+  );
 }

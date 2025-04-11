@@ -580,7 +580,11 @@ const InstructorsPage = () => {
       {/* Back to top button */}
       <div className="fixed bottom-8 right-8 z-50">
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
           className="bg-[#112240] hover:bg-[#1D3557] text-white p-3 rounded-full shadow-md transition-colors border border-gray-700 hover:border-[#f4bc45]/50"
           aria-label="Back to top"
         >

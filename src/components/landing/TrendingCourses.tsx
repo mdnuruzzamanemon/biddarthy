@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FiTrendingUp } from "react-icons/fi";
-import CourseCard from "./CourseCard";
+import CourseCard from "../../components/CourseCard";
 
 interface TrendingItem {
   _id: string;

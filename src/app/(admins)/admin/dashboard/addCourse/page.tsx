@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent } from "react";
-import CourseList from "@/app/(admins)/admin/components/CourseList";
 import CourseForm from "@/app/(admins)/admin/components/CourseForm";
+import CourseList from "@/app/(admins)/admin/components/CourseList";
 import { Course } from "@/app/(admins)/admin/components/types/courseType";
+import { FormEvent, useEffect, useState } from "react";
 
 type Category = {
   _id: string;
@@ -19,7 +19,11 @@ export default function CourseManagement() {
   const [error, setError] = useState<string | null>(null); // New error state
 
   const getToken = () => {
-    return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+    if (typeof document === "undefined") return "";
+    return document.cookie.replace(
+      /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
+      "$1"
+    );
   };
 
   const fetchCategories = async () => {
@@ -63,7 +67,7 @@ export default function CourseManagement() {
   const handleAddCourse = () => {
     setCourseToEdit(null);
     setShowCourseList(false);
-  }; 
+  };
 
   const handleEditCourse = (course: Course) => {
     setCourseToEdit(course);
@@ -80,28 +84,30 @@ export default function CourseManagement() {
     } finally {
       setLoading(false);
     }
-  }
-  
+  };
+
   const handleCreateTrendingCourse = async (courseId: string) => {
     setLoading(true);
     setError(null);
     const token = getToken();
-  
+
     try {
       const res = await fetch("/api/trending", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ courseId }),
       });
-  
+
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message || "Failed to add course to trending");
+        throw new Error(
+          errorData.message || "Failed to add course to trending"
+        );
       }
-  
+
       // Refresh the trending courses
       fetchCourses();
     } catch (error: any) {
@@ -111,27 +117,40 @@ export default function CourseManagement() {
       setLoading(false);
     }
   };
-  
 
   const handleSaveCourse = async (updatedCourse: Course, event: FormEvent) => {
     event.preventDefault();
     setError(null);
     const token = getToken();
     const method = updatedCourse._id ? "PUT" : "POST";
-    const url = updatedCourse._id ? `/api/courses/${updatedCourse._id}` : "/api/courses";
+    const url = updatedCourse._id
+      ? `/api/courses/${updatedCourse._id}`
+      : "/api/courses";
     setLoading(true);
 
     const formData = new FormData();
     formData.append("title", updatedCourse.title);
     formData.append("price", updatedCourse.price.toString());
-    formData.append("discountPrice", updatedCourse.discountPrice?.toString() || "");
+    formData.append(
+      "discountPrice",
+      updatedCourse.discountPrice?.toString() || ""
+    );
     formData.append("description", updatedCourse.description);
     formData.append("instructor", updatedCourse.instructor);
-    formData.append("discountEndsAt", updatedCourse.discountEndsAt ? new Date(updatedCourse.discountEndsAt).toISOString() : "");
+    formData.append(
+      "discountEndsAt",
+      updatedCourse.discountEndsAt
+        ? new Date(updatedCourse.discountEndsAt).toISOString()
+        : ""
+    );
     formData.append("demoVideo", updatedCourse.demoVideo || "");
-    formData.append("category", updatedCourse.category._id); 
+    formData.append("category", updatedCourse.category._id);
 
-    if (updatedCourse.thumbnail && typeof updatedCourse.thumbnail === 'object' && (updatedCourse.thumbnail as any) instanceof File) {
+    if (
+      updatedCourse.thumbnail &&
+      typeof updatedCourse.thumbnail === "object" &&
+      (updatedCourse.thumbnail as any) instanceof File
+    ) {
       formData.append("thumbnail", updatedCourse.thumbnail);
     }
 
@@ -139,7 +158,7 @@ export default function CourseManagement() {
       const res = await fetch(url, {
         method,
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: formData,
       });

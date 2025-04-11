@@ -5,7 +5,7 @@ import Lottie from "lottie-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
-import chemistryAnimation from "../animations/Animation - 1737788326125.json";
+import chemistryAnimation from "../../animations/Animation - 1737788326125.json";
 
 const Header = () => {
   const [currentPhrase, setCurrentPhrase] = useState(0);

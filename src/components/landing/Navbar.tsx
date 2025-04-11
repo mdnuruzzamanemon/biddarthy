@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
-import logo from "../app/client/images/logo.svg";
+import logo from "../../app/client/images/logo.svg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,12 +24,14 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    // Handle click outside of menu
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
 
+    // Handle scroll event
     const handleScroll = () => {
       if (window.scrollY > 10) {
         setIsScrolled(true);
@@ -41,17 +43,26 @@ const Navbar = () => {
     // In a real app, you would get this from your cart state
     // This is just for demonstration
     const getCartCount = () => {
-      const count = localStorage.getItem("cartCount");
-      setCartCount(count ? parseInt(count) : 0);
+      // Only run on client side
+      if (typeof window !== "undefined") {
+        const count = localStorage.getItem("cartCount");
+        setCartCount(count ? parseInt(count) : 0);
+      }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    window.addEventListener("scroll", handleScroll);
-    getCartCount();
+    // Only add event listeners on client side
+    if (typeof window !== "undefined") {
+      document.addEventListener("mousedown", handleClickOutside);
+      window.addEventListener("scroll", handleScroll);
+      getCartCount();
+    }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      window.removeEventListener("scroll", handleScroll);
+      // Only remove event listeners on client side
+      if (typeof window !== "undefined") {
+        document.removeEventListener("mousedown", handleClickOutside);
+        window.removeEventListener("scroll", handleScroll);
+      }
     };
   }, []);
 

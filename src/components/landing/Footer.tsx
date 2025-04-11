@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaFacebook, FaTelegram, FaYoutube } from "react-icons/fa";
-import logo from "../app/client/images/logo.svg";
+import logo from "../../app/client/images/logo.svg";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
