@@ -377,8 +377,8 @@ const InstructorsPage = () => {
               No instructors found
             </h3>
             <p className="text-gray-400 max-w-md mx-auto">
-              We couldn't find any instructors matching your search criteria.
-              Try adjusting your search terms.
+              We couldn&apos;t find any instructors matching your search
+              criteria. Try adjusting your search terms.
             </p>
           </div>
         ) : (

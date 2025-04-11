@@ -245,7 +245,7 @@ export default function MaterialPage() {
             className="text-center text-gray-300 mt-12"
           >
             {searchTerm ? (
-              <p>No materials found matching "{searchTerm}".</p>
+              <p>No materials found matching &quot;{searchTerm}&quot;.</p>
             ) : (
               <p>No materials available in this category.</p>
             )}

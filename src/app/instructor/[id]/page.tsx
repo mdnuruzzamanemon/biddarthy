@@ -309,7 +309,8 @@ export default function InstructorPage({ params }: { params: { id: string } }) {
           Instructor Not Found
         </h1>
         <p className="text-gray-400 mb-8">
-          The instructor you're looking for doesn't exist or has been removed.
+          The instructor you&apos;re looking for doesn&apos;t exist or has been
+          removed.
         </p>
         <Link
           href="/instructors"

@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 import {
@@ -278,12 +279,12 @@ const Testimonials = () => {
           <p className="text-xl text-gray-300 mb-6">
             Join our community of successful students
           </p>
-          <a
+          <Link
             href="/courses"
             className="inline-block py-3 px-8 bg-[#f4bc45] text-[#13284D] font-medium rounded-lg hover:bg-[#f4bc45]/90 transition-colors shadow-lg shadow-[#f4bc45]/20"
           >
             Explore Our Courses
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

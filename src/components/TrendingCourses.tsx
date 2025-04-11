@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FiTrendingUp } from "react-icons/fi";
 import CourseCard from "./CourseCard";
@@ -187,7 +188,7 @@ const TrendingCourses = () => {
             viewport={{ once: true }}
             className="mt-16 text-center"
           >
-            <a
+            <Link
               href="/courses"
               className="inline-flex items-center py-3 px-8 bg-[#13284D] text-[#f4bc45] font-medium rounded-lg hover:bg-[#1c3b6e] transition-colors border border-[#f4bc45]/30 shadow-lg shadow-[#0A192F]/50"
             >
@@ -206,7 +207,7 @@ const TrendingCourses = () => {
                   d="M14 5l7 7m0 0l-7 7m7-7H3"
                 ></path>
               </svg>
-            </a>
+            </Link>
           </motion.div>
         )}
       </div>

@@ -322,8 +322,8 @@ const CartPage = () => {
               Your cart is empty
             </h2>
             <p className="text-gray-400 mb-8 max-w-md mx-auto">
-              Looks like you haven't added any products to your cart yet. Browse
-              our collection to find something you'll love!
+              Looks like you haven&apos;t added any products to your cart yet.
+              Browse our collection to find something you&apos;ll love!
             </p>
             <Link href="/shop">
               <button className="bg-[#f4bc45] hover:bg-[#f4bc45]/90 text-[#0A192F] font-medium py-3 px-8 rounded-lg transition-colors">
