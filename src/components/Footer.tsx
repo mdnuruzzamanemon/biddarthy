@@ -1,28 +1,40 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { FaFacebook, FaYoutube, FaTelegram } from 'react-icons/fa'
-import logo from "../app/client/images/logo.svg"
+import Image from "next/image";
+import Link from "next/link";
+import { FaFacebook, FaTelegram, FaYoutube } from "react-icons/fa";
+import logo from "../app/client/images/logo.svg";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   const quickLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Courses', href: '/courses' },
-    { name: 'About Us', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Privacy Policy', href: '/privacy-policy' },
-    { name: 'Terms & Conditions', href: '/terms' },
-  ]
+    { name: "Home", href: "/" },
+    { name: "Courses", href: "/courses" },
+    { name: "About Us", href: "/about" },
+    { name: "Contact", href: "/contact" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms & Conditions", href: "/terms" },
+  ];
 
   const socialLinks = [
-    { name: 'Facebook', icon: FaFacebook, href: 'https://www.facebook.com/share/g/121DBgKH79p/' },
-    { name: 'YouTube', icon: FaYoutube, href: 'https://youtube.com/@miltonkhandokar-biddarthi?si=NsileSOVoEPNiieO' },
-    { name: 'Telegram', icon: FaTelegram, href: 'https://t.me/+5UIb19Smgvc1MDk1' },
+    {
+      name: "Facebook",
+      icon: FaFacebook,
+      href: "https://www.facebook.com/share/g/121DBgKH79p/",
+    },
+    {
+      name: "YouTube",
+      icon: FaYoutube,
+      href: "https://youtube.com/@miltonkhandokar-biddarthi?si=NsileSOVoEPNiieO",
+    },
+    {
+      name: "Telegram",
+      icon: FaTelegram,
+      href: "https://t.me/+5UIb19Smgvc1MDk1",
+    },
     // { name: 'LinkedIn', icon: FaLinkedin, href: 'https://linkedin.com/company/biddarthy' },
-  ]
+  ];
 
   return (
     <footer className="bg-[#13284D] text-white">
@@ -32,15 +44,11 @@ const Footer = () => {
           {/* Logo and About */}
           <div className="space-y-4">
             <Link href="/" className="inline-block">
-              <Image 
-                src={logo} 
-                alt="Biddarthy Logo" 
-                width={120} 
-                height={120} 
-              />
+              <Image src={logo} alt="Biddarthy Logo" width={120} height={120} />
             </Link>
             <p className="text-gray-300 text-sm">
-              Empowering students with quality education and guidance for their successful future.
+              Empowering students with quality education and guidance for their
+              successful future.
             </p>
           </div>
 
@@ -50,7 +58,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <Link 
+                  <Link
                     href={link.href}
                     className="text-gray-300 hover:text-white transition-colors"
                   >
@@ -66,8 +74,12 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <div className="space-y-2 text-gray-300">
               <p>Email: info@biddarthy.com</p>
-              <p>Phone: +880 1846-838507</p>
-              <p>Address: Farmgate,<br />Dhaka, Bangladesh</p>
+              <p>Phone: +8801989244327</p>
+              <p>
+                Address: Farmgate,
+                <br />
+                Dhaka, Bangladesh
+              </p>
             </div>
           </div>
 
@@ -100,9 +112,9 @@ const Footer = () => {
             </div>
             <div className="text-gray-300 text-sm flex items-center space-x-1">
               <span>Developed with ❤️ by</span>
-              <a 
-                href="https://pirhotech.com" 
-                target="_blank" 
+              <a
+                href="https://pirhotech.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-gray-300 transition-colors font-medium"
               >
@@ -113,7 +125,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer 
+export default Footer;
