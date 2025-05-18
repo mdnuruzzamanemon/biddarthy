@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface CourseCardProps {
-  id: string
-  title: string
-  thumbnail: string
-  price: number
-  discountPrice: number
-  discountPercentage: number
+  id: string;
+  title: string;
+  thumbnail: string;
+  price: number;
+  discountPrice: number;
+  discountPercentage: number;
 }
 
 const CourseCard = ({
@@ -20,7 +20,7 @@ const CourseCard = ({
   thumbnail,
   price,
   discountPrice,
-  discountPercentage
+  discountPercentage,
 }: CourseCardProps) => {
   const [enrolledStudents, setEnrolledStudents] = useState<number | null>(null);
 
@@ -53,9 +53,9 @@ const CourseCard = ({
     >
       <Link href={`/courses/${id}`}>
         <div className="relative w-full">
-          <div className="w-full" >
+          <div className="w-full">
             <Image
-              src={`https://api.biddarthi.org/${thumbnail}`}
+              src={`https://biddarthi-backend.pirhotech.com/${thumbnail}`}
               alt={title}
               width={800} // Adjust width as needed
               height={133} // Maintain aspect ratio (800:533 ~ 3:2)
@@ -70,7 +70,9 @@ const CourseCard = ({
 
           <div className="flex items-center mb-4">
             <span className="text-lg text-gray-300">
-              {enrolledStudents !== null ? `${enrolledStudents} students enrolled` : 'Loading...'}
+              {enrolledStudents !== null
+                ? `${enrolledStudents} students enrolled`
+                : "Loading..."}
             </span>
           </div>
 
@@ -78,9 +80,7 @@ const CourseCard = ({
             <span className="text-2xl md:text-3xl font-bold text-white">
               ৳{discountPrice}
             </span>
-            <span className="text-xl text-gray-400 line-through">
-              ৳{price}
-            </span>
+            <span className="text-xl text-gray-400 line-through">৳{price}</span>
             <span className="text-lg text-green-400 font-semibold">
               {discountPercentage}% off
             </span>
@@ -89,6 +89,6 @@ const CourseCard = ({
       </Link>
     </motion.div>
   );
-}
+};
 
 export default CourseCard;
